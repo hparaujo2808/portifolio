@@ -1,0 +1,44 @@
+---
+// Ícones na mesma língua da marca: traços curtos, um em teal.
+interface Props {
+  i: number;
+}
+const { i } = Astro.props;
+---
+
+<svg class="sicon" width="44" height="44" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true">
+  {i === 0 && (
+    <>
+      <g><path d="M8 12h28"></path></g>
+      <g><path d="M8 22h16"></path></g>
+      <g class="acc"><path d="M8 32h10"></path></g>
+    </>
+  )}
+  {i === 1 && (
+    <>
+      <g><path d="M8 10h10"></path></g>
+      <g><path d="M26 10h10"></path></g>
+      <g class="acc"><path d="M8 22h28"></path></g>
+      <g><path d="M8 34h10"></path></g>
+      <g><path d="M26 34h10"></path></g>
+    </>
+  )}
+  {i === 2 && (
+    <>
+      <g><path d="M8 12h10"></path></g>
+      <g><path d="M26 12h10"></path></g>
+      <g><path d="M8 32h10"></path></g>
+      <g><path d="M26 32h10"></path></g>
+      <g class="acc"><path d="M18 18l8 8"></path></g>
+    </>
+  )}
+  {i === 3 && (
+    <>
+      <g><path d="M22 8v8"></path></g>
+      <g><path d="M22 28v8"></path></g>
+      <g><path d="M8 22h8"></path></g>
+      <g><path d="M28 22h8"></path></g>
+      <g class="acc"><path d="M19 19l6 6"></path></g>
+    </>
+  )}
+</svg>

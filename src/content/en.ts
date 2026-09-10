@@ -93,7 +93,14 @@ export default {
   },
   faq: {
     title: 'Straight answers',
+    note: 'Did not find yours?',
+    noteCta: 'Ask on WhatsApp',
+    noteText: 'Hi Henrique, I have a question about how you work.',
     items: [
+      {
+        q: 'Do I need text and photos ready?',
+        a: 'No. Most people do not. I outline the copy with you in the first conversation and point out where a real photo matters and where it does not.',
+      },
       {
         q: 'How much does it cost?',
         a: 'Every project has its own price, because every project has its own scope. After our first conversation you get a fixed proposal with price and timeline.',
@@ -105,6 +112,18 @@ export default {
       {
         q: 'What if I want to stop the maintenance?',
         a: 'Then it stops. The site stays yours, online, working. Maintenance is a service, not a leash.',
+      },
+      {
+        q: 'Do I own the site?',
+        a: 'Yes, code and domain. You get access to everything. If you ever switch developers, the site goes with you.',
+      },
+      {
+        q: 'I already have a site. Can you redo it?',
+        a: 'Yes, and it is the most common case. We look at what exists, keep what works and rebuild what no longer convinces.',
+      },
+      {
+        q: 'How does payment work?',
+        a: 'Part on proposal approval, the rest on delivery. Maintenance, if you want it, is monthly and separate.',
       },
       {
         q: 'Do you work with clients outside Brazil?',

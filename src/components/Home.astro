@@ -1,6 +1,7 @@
 ---
 import { site, whatsappUrl } from '../config';
 import Mark from './Mark.astro';
+import ServiceIcon from './ServiceIcon.astro';
 
 interface Props {
   t: any;
@@ -56,7 +57,8 @@ const { t } = Astro.props;
 
 <section class="section wrap" id="process">
   <h2>{t.process.title}</h2>
-  <div class="steps">
+  <div class="steps" id="steps">
+    <i class="fill" id="steps-fill"></i>
     {t.process.steps.map((s: any) => (
       <article class="step">
         <span class="num">{s.label}</span>
@@ -70,8 +72,9 @@ const { t } = Astro.props;
 <section class="section wrap" id="services">
   <h2>{t.services.title}</h2>
   <div class="services">
-    {t.services.items.map((s: any) => (
+    {t.services.items.map((s: any, i: number) => (
       <a class="service" href={whatsappUrl(s.ctaText)} target="_blank" rel="noopener">
+        <ServiceIcon i={i} />
         <h3>
           {s.title}
           {s.tag && <span class="tag">{s.tag}</span>}
@@ -84,7 +87,12 @@ const { t } = Astro.props;
 </section>
 
 <section class="section wrap" id="faq">
-  <h2>{t.faq.title}</h2>
+  <div class="faq-grid">
+    <div class="faq-side">
+      <h2>{t.faq.title}</h2>
+      <p class="small">{t.faq.note}</p>
+      <a class="faq-link" href={whatsappUrl(t.faq.noteText)} target="_blank" rel="noopener">{t.faq.noteCta}</a>
+    </div>
   <div class="faq">
     {t.faq.items.map((f: any) => (
       <details>
@@ -95,6 +103,7 @@ const { t } = Astro.props;
         <div class="answer"><div><p>{f.a}</p></div></div>
       </details>
     ))}
+  </div>
   </div>
 </section>
 

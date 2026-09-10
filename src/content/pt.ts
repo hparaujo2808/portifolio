@@ -93,7 +93,14 @@ export default {
   },
   faq: {
     title: 'Perguntas diretas',
+    note: 'Não achou a sua?',
+    noteCta: 'Pergunta no WhatsApp',
+    noteText: 'Oi Henrique, tenho uma dúvida sobre como você trabalha.',
     items: [
+      {
+        q: 'Preciso ter texto e fotos prontos?',
+        a: 'Não. A maioria não tem. Eu monto a estrutura do texto com você na conversa inicial, e indico onde uma foto real faz diferença e onde não faz.',
+      },
       {
         q: 'Quanto custa?',
         a: 'Cada projeto tem preço próprio, porque cada projeto tem escopo próprio. Depois da primeira conversa você recebe uma proposta fechada, com valor e prazo.',
@@ -105,6 +112,18 @@ export default {
       {
         q: 'E se eu quiser parar a manutenção?',
         a: 'Para. O site continua seu, no ar, funcionando. A manutenção é um serviço, não uma amarra.',
+      },
+      {
+        q: 'O site fica sendo meu?',
+        a: 'Sim, código e domínio. Você recebe acesso a tudo. Se um dia quiser trocar de desenvolvedor, leva o site junto.',
+      },
+      {
+        q: 'Já tenho um site. Dá pra refazer?',
+        a: 'Dá, e costuma ser o caso mais comum. A gente olha o que existe, aproveita o que funciona e refaz o que não convence mais.',
+      },
+      {
+        q: 'Como é o pagamento?',
+        a: 'Uma parte na aprovação da proposta e o restante na entrega. A manutenção, quando você quiser, é mensal e separada.',
       },
       {
         q: 'Você atende fora do Brasil?',
