@@ -59,6 +59,7 @@ const { t } = Astro.props;
   <h2>{t.process.title}</h2>
   <div class="steps" id="steps">
     <i class="fill" id="steps-fill"></i>
+    <span class="steps-end"><Mark size={34} /></span>
     {t.process.steps.map((s: any) => (
       <article class="step">
         <span class="num">{s.label}</span>
