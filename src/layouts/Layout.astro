@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { site, whatsappUrl } from '../config';
+import { site, whatsappUrl, url } from '../config';
 import Mark from '../components/Mark.astro';
 
 interface Props {
@@ -21,9 +21,9 @@ const year = new Date().getFullYear();
     <meta property="og:title" content={t.meta.title} />
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:type" content="website" />
-    <link rel="alternate" hreflang="pt-BR" href="/" />
-    <link rel="alternate" hreflang="en" href="/en/" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" hreflang="pt-BR" href={url("/")} />
+    <link rel="alternate" hreflang="en" href={url("/en/")} />
+    <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -54,7 +54,7 @@ const year = new Date().getFullYear();
           <a href="#contact">{t.nav.contact}</a>
         </nav>
         <div class="tools">
-          <a class="chip" href={t.nav.switchLangHref} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
+          <a class="chip" href={url(t.nav.switchLangHref)} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
             {t.nav.switchLang}
           </a>
           <button class="theme-btn" id="theme" type="button" aria-label={t.nav.theme}>

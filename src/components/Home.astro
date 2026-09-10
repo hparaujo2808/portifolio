@@ -1,5 +1,5 @@
 ---
-import { site, whatsappUrl } from '../config';
+import { site, whatsappUrl, url } from '../config';
 import Mark from './Mark.astro';
 import ServiceIcon from './ServiceIcon.astro';
 
@@ -37,7 +37,7 @@ const { t } = Astro.props;
   <div class="about-grid">
     <figure class="portrait">
       <span class="ph"><Mark size={96} class="faint" /><small>{t.about.photoPh}</small></span>
-      <img src="/henrique.jpg" alt={t.about.photoAlt} loading="lazy" onerror="this.remove()" />
+      <img src={url("/henrique.jpg")} alt={t.about.photoAlt} loading="lazy" onerror="this.remove()" />
     </figure>
     <div class="about-text">
       <p class="lead">{t.about.p1}</p>
