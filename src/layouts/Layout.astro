@@ -1,0 +1,153 @@
+---
+import '../styles/global.css';
+import { site, whatsappUrl } from '../config';
+
+interface Props {
+  t: any;
+}
+
+const { t } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={t.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" hreflang="pt-BR" href="/" />
+    <link rel="alternate" hreflang="en" href="/en/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // Tema antes do primeiro paint, pra não piscar.
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = saved || sys;
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <div class="wrap">
+        <a class="brand" href="#top" aria-label={site.name}>
+          {site.name}
+          <span class="mono">BH</span>
+        </a>
+        <nav class="nav" aria-label="Principal">
+          <a href="#about">{t.nav.about}</a>
+          <a href="#process">{t.nav.work}</a>
+          <a href="#services">{t.nav.services}</a>
+          <a href="#contact">{t.nav.contact}</a>
+        </nav>
+        <div class="tools">
+          <a class="pill" href={t.nav.switchLangHref} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
+            {t.nav.switchLang}
+          </a>
+          <button class="theme-btn" id="theme" type="button" aria-label={t.nav.theme}>
+            <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"></path>
+            </svg>
+            <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+            </svg>
+          </button>
+          <a class="pill" href={whatsappUrl(t.hero.ctaText)} target="_blank" rel="noopener">
+            {t.nav.cta}
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top">
+      <slot />
+    </main>
+
+    <footer class="wrap footer">
+      <span class="mono">© {year} {site.name}. {t.footer.made}</span>
+      <span class="mono"><a href="#top">{t.footer.top} ↑</a></span>
+    </footer>
+
+    <script>
+      // Marca "carregado" pra soltar a animação do título.
+      requestAnimationFrame(() => document.documentElement.classList.add('loaded'));
+
+      // Tema
+      const btn = document.getElementById('theme');
+      btn?.addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch {}
+      });
+
+      // Reveal on scroll
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+      // Header some ao descer, volta ao subir
+      const header = document.getElementById('header');
+      let last = 0;
+      addEventListener(
+        'scroll',
+        () => {
+          const y = scrollY;
+          if (header) header.classList.toggle('hide', y > last && y > 120);
+          last = y;
+        },
+        { passive: true },
+      );
+
+      // Spotlight do hero segue o cursor
+      const hero = document.querySelector<HTMLElement>('.hero');
+      hero?.addEventListener('pointermove', (ev) => {
+        const r = hero.getBoundingClientRect();
+        hero.style.setProperty('--mx', `${ev.clientX - r.left}px`);
+        hero.style.setProperty('--my', `${ev.clientY - r.top}px`);
+      });
+
+      // Relógio local
+      const clock = document.getElementById('clock');
+      const tz = clock?.dataset.tz || 'America/Sao_Paulo';
+      const tick = () => {
+        if (!clock) return;
+        clock.textContent = new Intl.DateTimeFormat('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZone: tz,
+          hour12: false,
+        }).format(new Date());
+      };
+      tick();
+      setInterval(tick, 1000);
+    </script>
+  </body>
+</html>
