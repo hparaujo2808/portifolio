@@ -108,6 +108,24 @@ const year = new Date().getFullYear();
         { passive: true },
       );
 
+      // Marca grande do contato: cada traço aponta pro cursor.
+      const card = document.getElementById('contact-card');
+      const big = card?.querySelector<SVGSVGElement>('.mark.big');
+      if (card && big) {
+        const groups = Array.from(big.querySelectorAll<SVGGElement>('g'));
+        const base = groups.map((g) => (g.classList.contains('acc') ? 56 : 0));
+        card.addEventListener('pointermove', (e) => {
+          groups.forEach((g, i) => {
+            const r = g.getBoundingClientRect();
+            const cx = r.left + r.width / 2;
+            const cy = r.top + r.height / 2;
+            const ang = (Math.atan2(e.clientY - cy, e.clientX - cx) * 180) / Math.PI;
+            g.style.transform = `rotate(${ang - base[i]}deg)`;
+          });
+        });
+        card.addEventListener('pointerleave', () => groups.forEach((g) => (g.style.transform = '')));
+      }
+
       // ------------------------------------------------------------
       // Campo de linhas do hero. Cada traço aponta pra onde o
       // fluxo manda; o cursor dobra o fluxo e o clique manda uma onda.

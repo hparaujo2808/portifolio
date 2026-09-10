@@ -810,12 +810,39 @@ p {
 
 /* Contato */
 .contact {
+  position: relative;
   border-radius: calc(var(--radius) * 1.6);
   background: var(--ink);
   color: var(--bg);
   padding: clamp(40px, 6vw, 88px);
   display: grid;
   gap: 36px;
+  overflow: hidden;
+}
+
+.contact .mark.big {
+  position: absolute;
+  right: clamp(24px, 6vw, 88px);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--bg);
+  opacity: 0.9;
+  width: clamp(140px, 18vw, 260px);
+  height: auto;
+  pointer-events: none;
+}
+
+.contact .mark.big g {
+  transition: transform 0.35s var(--ease);
+}
+
+@media (max-width: 900px) {
+  .contact .mark.big {
+    position: static;
+    transform: none;
+    width: 96px;
+    margin-bottom: -8px;
+  }
 }
 
 .contact h2 {
