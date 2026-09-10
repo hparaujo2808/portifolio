@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site, whatsappUrl } from '../config';
+import Mark from '../components/Mark.astro';
 
 interface Props {
   t: any;
@@ -42,7 +43,10 @@ const year = new Date().getFullYear();
   <body>
     <header class="header" id="header">
       <div class="wrap">
-        <a class="brand" href="#top">{site.name}</a>
+        <a class="brand" href="#top" aria-label={site.name}>
+          <Mark size={28} />
+          <span class="brand-name">{site.name}</span>
+        </a>
         <nav class="nav" aria-label="Principal">
           <a href="#about">{t.nav.about}</a>
           <a href="#process">{t.nav.work}</a>
@@ -74,7 +78,7 @@ const year = new Date().getFullYear();
     </main>
 
     <footer class="wrap footer">
-      <span>© {year} {site.name}. {t.footer.made}</span>
+      <span class="foot-brand"><Mark size={22} /> © {year} {site.name}. {t.footer.made}</span>
       <a href="#top">{t.footer.top}</a>
     </footer>
 
@@ -98,6 +102,7 @@ const year = new Date().getFullYear();
         () => {
           const y = scrollY;
           header?.classList.toggle('hide', y > last && y > 120);
+          header?.classList.toggle('compact', y > 80);
           last = y;
         },
         { passive: true },

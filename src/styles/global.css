@@ -137,6 +137,59 @@ p {
   font-weight: 600;
   letter-spacing: -0.02em;
   font-size: 1.05rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+}
+
+.brand-name {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 1;
+  transition: max-width 0.6s var(--ease), opacity 0.4s var(--ease);
+}
+
+.header.compact .brand-name {
+  max-width: 0;
+  opacity: 0;
+}
+
+/* Marca: nove traços, um fora da fila */
+.mark {
+  flex: none;
+  color: var(--ink);
+}
+
+.mark .acc {
+  color: var(--accent);
+}
+
+.mark g {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.7s var(--ease);
+}
+
+.brand:hover .mark .acc {
+  transform: rotate(-90deg);
+}
+
+.brand:hover .mark .m1,
+.brand:hover .mark .m9 {
+  transform: rotate(35deg);
+}
+
+.brand:hover .mark .m3,
+.brand:hover .mark .m7 {
+  transform: rotate(-35deg);
+}
+
+.mark.faint {
+  color: var(--ink-3);
+  opacity: 0.5;
 }
 
 .nav {
@@ -282,6 +335,7 @@ p {
 
 .hero h1 .line:nth-child(3) > span {
   transition-delay: 0.2s;
+  color: var(--accent);
 }
 
 .loaded .hero h1 .line > span {
@@ -476,8 +530,10 @@ p {
   inset: 0;
   display: grid;
   place-items: center;
+  align-content: center;
+  gap: 12px;
   color: var(--ink-3);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .about-text {
@@ -822,6 +878,16 @@ p {
 
 .footer a:hover {
   color: var(--ink);
+}
+
+.foot-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.foot-brand .mark {
+  color: var(--ink-2);
 }
 
 /* ------------------------------------------------------------------
