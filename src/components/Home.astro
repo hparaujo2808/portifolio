@@ -8,49 +8,43 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section class="hero wrap">
-  <span class="mono kicker">{t.hero.kicker}</span>
-  <h1>
-    {t.hero.lines.map((l: string) => <span class="line"><span>{l}</span></span>)}
-  </h1>
-
-  <div class="hero-foot">
-    <p class="reveal">{t.hero.sub}</p>
-    <div class="hero-side">
-      <span class="status mono reveal" style="--i:1"><i></i>{t.hero.status}</span>
-      <span class="mono reveal" style="--i:2">
-        {t.hero.location} · <span id="clock" data-tz={site.timezone}>--:--:--</span>
-      </span>
-      <a class="btn reveal" style="--i:3" href={whatsappUrl(t.hero.ctaText)} target="_blank" rel="noopener">
-        {t.hero.cta}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M7 17 17 7M9 7h8v8"></path>
-        </svg>
-      </a>
+<section class="hero">
+  <canvas class="field" id="field" aria-hidden="true"></canvas>
+  <span class="hint">{t.hero.hint}</span>
+  <div class="wrap">
+    <h1>
+      {t.hero.lines.map((l: string) => <span class="line"><span>{l}</span></span>)}
+    </h1>
+    <div class="hero-foot">
+      <p>{t.hero.sub}</p>
+      <div class="hero-cta">
+        <span class="status"><i></i>{t.hero.status}</span>
+        <a class="btn" href={whatsappUrl(t.hero.ctaText)} target="_blank" rel="noopener">
+          {t.hero.cta}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M7 17 17 7M9 7h8v8"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="section wrap" id="about">
-  <div class="section-head reveal">
-    <span class="mono">{t.about.index}</span>
-    <h2>{t.about.title}</h2>
-  </div>
+  <h2>{t.about.title}</h2>
   <div class="about-grid">
-    <figure class="portrait reveal">
-      <i class="corner tl"></i>
-      <i class="corner br"></i>
-      <span class="ph mono">foto · 4:5</span>
+    <figure class="portrait">
+      <span class="ph">{t.about.photoPh}</span>
       <img src="/henrique.jpg" alt={t.about.photoAlt} loading="lazy" onerror="this.remove()" />
     </figure>
     <div class="about-text">
-      <p class="lead reveal">{t.about.p1}</p>
-      <p class="reveal" style="--i:1">{t.about.p2}</p>
-      <p class="reveal" style="--i:2">{t.about.p3}</p>
-      <div class="facts reveal" style="--i:3">
+      <p class="lead">{t.about.p1}</p>
+      <p>{t.about.p2}</p>
+      <p>{t.about.p3}</p>
+      <div class="facts">
         {t.about.facts.map(([k, v]: [string, string]) => (
           <div>
-            <span class="mono">{k}</span>
+            <span>{k}</span>
             <strong>{v}</strong>
           </div>
         ))}
@@ -60,14 +54,11 @@ const { t } = Astro.props;
 </section>
 
 <section class="section wrap" id="process">
-  <div class="section-head reveal">
-    <span class="mono">{t.process.index}</span>
-    <h2>{t.process.title}</h2>
-  </div>
+  <h2>{t.process.title}</h2>
   <div class="steps">
-    {t.process.steps.map((s: any, i: number) => (
-      <article class="step reveal" style={`--i:${i}`}>
-        <span class="num">{s.n}</span>
+    {t.process.steps.map((s: any) => (
+      <article class="step">
+        <span class="num">{s.label}</span>
         <h3>{s.title}</h3>
         <p>{s.text}</p>
       </article>
@@ -76,35 +67,26 @@ const { t } = Astro.props;
 </section>
 
 <section class="section wrap" id="services">
-  <div class="section-head reveal">
-    <span class="mono">{t.services.index}</span>
-    <h2>{t.services.title}</h2>
-  </div>
+  <h2>{t.services.title}</h2>
   <div class="services">
-    {t.services.items.map((s: any, i: number) => (
-      <a class="service reveal" style={`--i:${i}`} href={whatsappUrl(t.hero.ctaText)} target="_blank" rel="noopener">
-        <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+    {t.services.items.map((s: any) => (
+      <a class="service" href={whatsappUrl(s.ctaText)} target="_blank" rel="noopener">
         <h3>
           {s.title}
           {s.tag && <span class="tag">{s.tag}</span>}
         </h3>
         <p>{s.text}</p>
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M7 17 17 7M9 7h8v8"></path>
-        </svg>
+        <span class="link">{t.services.link}</span>
       </a>
     ))}
   </div>
 </section>
 
 <section class="section wrap" id="faq">
-  <div class="section-head reveal">
-    <span class="mono">{t.faq.index}</span>
-    <h2>{t.faq.title}</h2>
-  </div>
+  <h2>{t.faq.title}</h2>
   <div class="faq">
-    {t.faq.items.map((f: any, i: number) => (
-      <details class="reveal" style={`--i:${i}`}>
+    {t.faq.items.map((f: any) => (
+      <details>
         <summary>
           {f.q}
           <span class="plus"></span>
@@ -116,21 +98,18 @@ const { t } = Astro.props;
 </section>
 
 <section class="section wrap" id="contact">
-  <div class="section-head reveal">
-    <span class="mono">{t.contact.index}</span>
-    <h2>{t.contact.title}</h2>
-  </div>
   <div class="contact">
-    <p class="lead reveal">{t.contact.text}</p>
+    <h2>{t.contact.title}</h2>
+    <p class="lead">{t.contact.text}</p>
     <div class="cta-row">
-      <a class="btn big reveal" style="--i:1" href={whatsappUrl(t.contact.ctaText)} target="_blank" rel="noopener">
+      <a class="btn big" href={whatsappUrl(t.contact.ctaText)} target="_blank" rel="noopener">
         {t.contact.cta}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
           <path d="M7 17 17 7M9 7h8v8"></path>
         </svg>
       </a>
-      <span class="email reveal" style="--i:2">
-        <span class="mono">{t.contact.emailLabel}</span>
+      <span class="email">
+        <span>{t.contact.emailLabel}</span>
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </span>
     </div>

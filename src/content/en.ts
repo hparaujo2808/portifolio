@@ -22,10 +22,10 @@ export default {
     cta: 'Talk on WhatsApp',
     ctaText: 'Hi Henrique, I saw your site and I would like to talk about a project.',
     status: 'Taking projects',
+    hint: 'Move the mouse. Click.',
     location: 'Belo Horizonte, BR',
   },
   about: {
-    index: '01',
     title: 'Who I am',
     p1: 'Henrique Araújo. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been into technology since before I knew it had a name.',
     p2: 'What I do differently is simple to say and rare to find: I listen. Before I open the editor, I want to understand what your business sells, to whom, and what needs to happen when someone lands on the page. The site comes out of that. Not out of a purchased theme.',
@@ -36,51 +36,55 @@ export default {
       ['Languages', 'English and Portuguese'],
       ['Delivery', 'From scratch, no templates'],
     ],
+    photoPh: 'photo 4:5',
     photoAlt: 'Photo of Henrique Araújo',
   },
   process: {
-    index: '02',
     title: 'How I work',
     steps: [
       {
-        n: '1',
+        label: 'Step 1',
         title: 'Conversation',
         text: 'A call or a message thread. I ask a lot: what you sell, who buys it, what the site needs to make happen.',
       },
       {
-        n: '2',
+        label: 'Step 2',
         title: 'Proposal',
         text: 'Written scope, timeline and price, locked before a single line of code. No surprises halfway through.',
       },
       {
-        n: '3',
+        label: 'Step 3',
         title: 'Build',
         text: 'You watch the site take shape, with versions to review. Adjusting is part of the process, not an exception.',
       },
       {
-        n: '4',
+        label: 'Step 4',
         title: 'Launch, and care',
         text: 'Deployment, domain, and an optional monthly maintenance plan. Cancel whenever you want, no penalty.',
       },
     ],
   },
   services: {
-    index: '03',
     title: 'What I build',
+    link: 'Talk about this',
     items: [
       {
+        ctaText: 'Hi Henrique, I would like to talk about a landing page.',
         title: 'Landing page',
         text: 'One page, one goal. To launch a product, collect leads, or sell a specific service.',
       },
       {
+        ctaText: 'Hi Henrique, I would like to talk about a business website.',
         title: 'Business website',
         text: 'Your brand home on the web. Who you are, what you do, how to reach you. Built to last.',
       },
       {
+        ctaText: 'Hi Henrique, I need something custom and would like to talk.',
         title: 'Custom',
         text: 'Need something that does not fit a box? Client area, catalog, integrations. We talk, I build it.',
       },
       {
+        ctaText: 'Hi Henrique, I would like to know more about monthly maintenance.',
         title: 'Monthly maintenance',
         text: 'Updates, fixes, small tweaks and monitoring. Billed monthly. Want to stop? Stop. No lock-in.',
         tag: 'optional',
@@ -88,7 +92,6 @@ export default {
     ],
   },
   faq: {
-    index: '04',
     title: 'Straight answers',
     items: [
       {
@@ -110,7 +113,6 @@ export default {
     ],
   },
   contact: {
-    index: '05',
     title: 'Let us talk',
     text: 'Message me on WhatsApp with one sentence about what you need. I reply, we set up a conversation, and from there I put together the proposal.',
     cta: 'Open WhatsApp',

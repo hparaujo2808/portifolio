@@ -22,10 +22,10 @@ export default {
     cta: 'Conversar no WhatsApp',
     ctaText: 'Oi Henrique, vi seu site e quero conversar sobre um projeto.',
     status: 'Aceitando projetos',
+    hint: 'Move o mouse. Clica.',
     location: 'Belo Horizonte, BR',
   },
   about: {
-    index: '01',
     title: 'Quem sou',
     p1: 'Henrique Araújo. Estudo Engenharia da Computação no IBMEC, em Belo Horizonte, e mexo com tecnologia desde antes de saber que isso tinha nome.',
     p2: 'O que eu faço diferente é simples de dizer e raro de encontrar: eu escuto. Antes de abrir o editor, eu quero entender o que o seu negócio vende, pra quem, e o que precisa acontecer quando alguém abre a página. O site sai disso. Não de um tema comprado.',
@@ -36,51 +36,55 @@ export default {
       ['Idiomas', 'Português e inglês'],
       ['Entrega', 'Do zero, sem template'],
     ],
+    photoPh: 'foto 4:5',
     photoAlt: 'Foto de Henrique Araújo',
   },
   process: {
-    index: '02',
     title: 'Como trabalho',
     steps: [
       {
-        n: '1',
+        label: 'Passo 1',
         title: 'Conversa',
         text: 'Uma chamada ou uma troca de mensagens. Eu pergunto muito: o que você vende, quem compra, o que o site precisa fazer acontecer.',
       },
       {
-        n: '2',
+        label: 'Passo 2',
         title: 'Proposta',
         text: 'Escopo escrito, prazo e preço fechados antes de qualquer linha de código. Sem surpresa no meio do caminho.',
       },
       {
-        n: '3',
+        label: 'Passo 3',
         title: 'Construção',
         text: 'Você acompanha o site nascendo, com versões pra revisar. Ajuste é parte do processo, não exceção.',
       },
       {
-        n: '4',
+        label: 'Passo 4',
         title: 'No ar, e cuidado',
         text: 'Publicação, domínio, e um plano de manutenção mensal opcional. Cancela quando quiser, sem multa.',
       },
     ],
   },
   services: {
-    index: '03',
     title: 'O que entrego',
+    link: 'Falar sobre isso',
     items: [
       {
+        ctaText: 'Oi Henrique, quero conversar sobre uma landing page.',
         title: 'Landing page',
         text: 'Uma página, um objetivo. Para lançar um produto, captar contatos ou vender um serviço específico.',
       },
       {
+        ctaText: 'Oi Henrique, quero conversar sobre um site institucional.',
         title: 'Site institucional',
         text: 'A casa da sua marca na internet. Quem você é, o que faz, como falar com você. Feito pra durar.',
       },
       {
+        ctaText: 'Oi Henrique, preciso de algo sob medida e quero conversar.',
         title: 'Sob medida',
         text: 'Precisa de algo que não cabe em caixinha? Área de cliente, catálogo, integração. A gente conversa e eu construo.',
       },
       {
+        ctaText: 'Oi Henrique, quero saber mais sobre a manutenção mensal.',
         title: 'Manutenção mensal',
         text: 'Atualizações, correções, pequenos ajustes e monitoramento. Pago por mês. Quer parar, para. Sem fidelidade.',
         tag: 'opcional',
@@ -88,7 +92,6 @@ export default {
     ],
   },
   faq: {
-    index: '04',
     title: 'Perguntas diretas',
     items: [
       {
@@ -110,7 +113,6 @@ export default {
     ],
   },
   contact: {
-    index: '05',
     title: 'Vamos conversar',
     text: 'Me chama no WhatsApp com uma frase sobre o que você precisa. Eu respondo, a gente marca uma conversa, e a partir dela eu monto a proposta.',
     cta: 'Abrir WhatsApp',
