@@ -116,8 +116,8 @@ const year = new Date().getFullYear();
         const update = () => {
           const r = steps.getBoundingClientRect();
           const vertical = innerWidth <= 1000;
-          const start = innerHeight * 0.85;
-          const span = vertical ? Math.max(r.height, 1) : innerHeight * 0.5;
+          const start = innerHeight * 0.92;
+          const span = vertical ? Math.max(r.height, 1) : innerHeight * 0.3;
           const p = Math.min(1, Math.max(0, (start - r.top) / span));
           steps.style.setProperty('--p', String(p));
           items.forEach((el, i) => el.classList.toggle('on', p >= i / items.length + 0.02));
