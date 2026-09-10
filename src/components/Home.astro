@@ -2,6 +2,7 @@
 import { site, whatsappUrl, url } from '../config';
 import Mark from './Mark.astro';
 import ServiceIcon from './ServiceIcon.astro';
+import Social from './Social.astro';
 
 interface Props {
   t: any;
@@ -51,6 +52,7 @@ const { t } = Astro.props;
           </div>
         ))}
       </div>
+      <Social />
     </div>
   </div>
 </section>
@@ -123,13 +125,6 @@ const { t } = Astro.props;
       <span class="email">
         <span>{t.contact.emailLabel}</span>
         <a href={`mailto:${site.email}`}>{site.email}</a>
-      </span>
-      <span class="email">
-        <span>{t.contact.socialLabel}</span>
-        <span class="social">
-          <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
-          <a href={site.github} target="_blank" rel="noopener">GitHub</a>
-        </span>
       </span>
     </div>
   </div>
