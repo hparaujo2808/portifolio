@@ -6,6 +6,8 @@ export const site = {
   email: 'henriquepinharaujo@gmail.com',
   city: 'Belo Horizonte',
   timezone: 'America/Sao_Paulo',
+  linkedin: 'https://www.linkedin.com/in/henrique-pinheiro-62ba87355/',
+  github: 'https://github.com/hparaujo2808',
 };
 
 // Prefixa caminhos absolutos com a base do site (ex.: /portifolio/ no GitHub Pages).

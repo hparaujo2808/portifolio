@@ -137,6 +137,7 @@ export default {
     cta: 'Open WhatsApp',
     ctaText: 'Hi Henrique, I would like to talk about a website.',
     emailLabel: 'or by email',
+    socialLabel: 'also find me on',
   },
   footer: {
     made: 'Built from scratch in Belo Horizonte, Brazil.',

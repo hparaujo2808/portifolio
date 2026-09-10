@@ -1044,6 +1044,16 @@ p {
   color: var(--accent);
 }
 
+.contact .social {
+  display: inline-flex;
+  gap: 18px;
+}
+
+.foot-links {
+  display: inline-flex;
+  gap: 22px;
+}
+
 /* Rodapé */
 .footer {
   padding-block: 32px;

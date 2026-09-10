@@ -124,6 +124,13 @@ const { t } = Astro.props;
         <span>{t.contact.emailLabel}</span>
         <a href={`mailto:${site.email}`}>{site.email}</a>
       </span>
+      <span class="email">
+        <span>{t.contact.socialLabel}</span>
+        <span class="social">
+          <a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+          <a href={site.github} target="_blank" rel="noopener">GitHub</a>
+        </span>
+      </span>
     </div>
   </div>
 </section>
