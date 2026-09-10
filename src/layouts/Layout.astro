@@ -131,19 +131,33 @@ const year = new Date().getFullYear();
       // Marca grande do contato: cada traço aponta pro cursor.
       const card = document.getElementById('contact-card');
       const big = card?.querySelector<SVGSVGElement>('.mark.big');
+      const coarse = matchMedia('(pointer: coarse)').matches;
       if (card && big) {
         const groups = Array.from(big.querySelectorAll<SVGGElement>('g'));
         const base = groups.map((g) => (g.classList.contains('acc') ? 56 : 0));
-        card.addEventListener('pointermove', (e) => {
+        const aim = (x: number, y: number) => {
           groups.forEach((g, i) => {
             const r = g.getBoundingClientRect();
             const cx = r.left + r.width / 2;
             const cy = r.top + r.height / 2;
-            const ang = (Math.atan2(e.clientY - cy, e.clientX - cx) * 180) / Math.PI;
+            const ang = (Math.atan2(y - cy, x - cx) * 180) / Math.PI;
             g.style.transform = `rotate(${ang - base[i]}deg)`;
           });
-        });
-        card.addEventListener('pointerleave', () => groups.forEach((g) => (g.style.transform = '')));
+        };
+        if (coarse) {
+          // Sem cursor: os traços miram um ponto que desce com a rolagem.
+          const onScroll = () => {
+            const r = card.getBoundingClientRect();
+            if (r.bottom < 0 || r.top > innerHeight) return;
+            const k = (innerHeight - r.top) / (innerHeight + r.height);
+            aim(innerWidth * (0.15 + 0.7 * k), r.top + r.height * (1.2 - k * 1.4));
+          };
+          addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        } else {
+          card.addEventListener('pointermove', (e) => aim(e.clientX, e.clientY));
+          card.addEventListener('pointerleave', () => groups.forEach((g) => (g.style.transform = '')));
+        }
       }
 
       // ------------------------------------------------------------
@@ -183,15 +197,36 @@ const year = new Date().getFullYear();
         const obs = new MutationObserver(() => (c = color()));
         obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
-        hero.addEventListener('pointermove', (e) => {
-          const r = canvas.getBoundingClientRect();
-          mouse.tx = e.clientX - r.left;
-          mouse.ty = e.clientY - r.top;
-        });
-        hero.addEventListener('pointerleave', () => {
-          mouse.tx = -9999;
-          mouse.ty = -9999;
-        });
+        // Celular: sem cursor, o foco deriva sozinho e a inclinação do
+        // aparelho desloca ele. iOS pede permissão num toque.
+        let tilt: { x: number; y: number } | null = null;
+        const onTilt = (e: DeviceOrientationEvent) => {
+          if (e.gamma == null || e.beta == null) return;
+          tilt = { x: Math.max(-1, Math.min(1, e.gamma / 30)), y: Math.max(-1, Math.min(1, (e.beta - 45) / 30)) };
+        };
+        const askTilt = () => {
+          const D = DeviceOrientationEvent as any;
+          if (typeof D?.requestPermission === 'function') {
+            D.requestPermission().then((s: string) => {
+              if (s === 'granted') addEventListener('deviceorientation', onTilt);
+            }).catch(() => {});
+          } else {
+            addEventListener('deviceorientation', onTilt);
+          }
+        };
+        if (coarse) {
+          hero.addEventListener('pointerdown', askTilt, { once: true });
+        } else {
+          hero.addEventListener('pointermove', (e) => {
+            const r = canvas.getBoundingClientRect();
+            mouse.tx = e.clientX - r.left;
+            mouse.ty = e.clientY - r.top;
+          });
+          hero.addEventListener('pointerleave', () => {
+            mouse.tx = -9999;
+            mouse.ty = -9999;
+          });
+        }
         hero.addEventListener('pointerdown', (e) => {
           const r = canvas.getBoundingClientRect();
           waves.push({ x: e.clientX - r.left, y: e.clientY - r.top, t: 0 });
@@ -210,6 +245,12 @@ const year = new Date().getFullYear();
           if (!visible) return;
           const t = (now - t0) / 1000;
 
+          if (coarse) {
+            const dx = tilt ? tilt.x * W * 0.35 : 0;
+            const dy = tilt ? tilt.y * H * 0.25 : 0;
+            mouse.tx = W * (0.5 + 0.3 * Math.sin(t * 0.35)) + dx;
+            mouse.ty = H * (0.42 + 0.22 * Math.cos(t * 0.27)) + dy;
+          }
           mouse.x += (mouse.tx - mouse.x) * 0.12;
           mouse.y += (mouse.ty - mouse.y) * 0.12;
 

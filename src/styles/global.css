@@ -1091,3 +1091,16 @@ p {
     transform: none;
   }
 }
+
+/* Hero no celular: botão inteiro, status embaixo */
+@media (max-width: 560px) {
+  .hero-cta {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 14px;
+    width: 100%;
+  }
+  .hero-cta .btn {
+    white-space: nowrap;
+  }
+}
