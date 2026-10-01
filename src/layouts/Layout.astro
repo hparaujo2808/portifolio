@@ -89,6 +89,34 @@ const year = new Date().getFullYear();
     <script>
       requestAnimationFrame(() => document.documentElement.classList.add('loaded'));
 
+      // iOS só liga o :active se existir algum listener de toque.
+      addEventListener('touchstart', () => {}, { passive: true });
+      const reducedMq = matchMedia('(prefers-reduced-motion: reduce)');
+
+      // FAQ: abre e fecha pelo mesmo caminho, e um toque no meio inverte
+      // a partir de onde está (a transição CSS retoma do valor atual).
+      document.querySelectorAll<HTMLDetailsElement>('.faq details').forEach((d) => {
+        const answer = d.querySelector<HTMLElement>('.answer');
+        d.querySelector('summary')?.addEventListener('click', (e) => {
+          if (!answer || reducedMq.matches) return;
+          e.preventDefault();
+          if (!d.open) {
+            d.classList.add('shut');
+            d.open = true;
+            answer.offsetHeight;
+            d.classList.remove('shut');
+          } else {
+            d.classList.toggle('shut');
+          }
+        });
+        answer?.addEventListener('transitionend', (e) => {
+          if (e.target === answer && d.classList.contains('shut')) {
+            d.open = false;
+            d.classList.remove('shut');
+          }
+        });
+      });
+
       // Tema
       document.getElementById('theme')?.addEventListener('click', () => {
         const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -139,14 +167,51 @@ const year = new Date().getFullYear();
       if (card && big) {
         const groups = Array.from(big.querySelectorAll<SVGGElement>('g'));
         const base = groups.map((g) => (g.classList.contains('acc') ? 56 : 0));
+        // Cada traço é uma mola (amortecimento 0.8, resposta 0.4s, os valores
+        // da Apple pra rotação). O alvo é desenrolado pro lado mais curto,
+        // então cruzar a esquerda do traço não faz ele dar a volta inteira.
+        const cur = groups.map(() => 0);
+        const vel = groups.map(() => 0);
+        const tgt = groups.map(() => 0);
+        const W0 = (2 * Math.PI) / 0.4;
+        const ZETA = 0.8;
+        let running = false;
+        let prev = 0;
+        const step = (now: number) => {
+          const dt = Math.min(0.032, (now - prev) / 1000);
+          prev = now;
+          let moving = false;
+          groups.forEach((g, i) => {
+            const a = -W0 * W0 * (cur[i] - tgt[i]) - 2 * ZETA * W0 * vel[i];
+            vel[i] += a * dt;
+            cur[i] += vel[i] * dt;
+            if (Math.abs(vel[i]) > 0.5 || Math.abs(cur[i] - tgt[i]) > 0.1) moving = true;
+            else (cur[i] = tgt[i]), (vel[i] = 0);
+            g.style.transform = `rotate(${cur[i]}deg)`;
+          });
+          running = moving;
+          if (moving) requestAnimationFrame(step);
+        };
+        const kick = () => {
+          if (running) return;
+          if (reducedMq.matches) {
+            groups.forEach((g, i) => ((cur[i] = tgt[i]), (g.style.transform = `rotate(${cur[i]}deg)`)));
+            return;
+          }
+          running = true;
+          prev = performance.now();
+          requestAnimationFrame(step);
+        };
+        const nearest = (i: number, deg: number) => cur[i] + ((((deg - cur[i]) % 360) + 540) % 360) - 180;
         const aim = (x: number, y: number) => {
           groups.forEach((g, i) => {
             const r = g.getBoundingClientRect();
             const cx = r.left + r.width / 2;
             const cy = r.top + r.height / 2;
             const ang = (Math.atan2(y - cy, x - cx) * 180) / Math.PI;
-            g.style.transform = `rotate(${ang - base[i]}deg)`;
+            tgt[i] = nearest(i, ang - base[i]);
           });
+          kick();
         };
         if (coarse) {
           // Sem cursor: os traços miram um ponto que desce com a rolagem.
@@ -160,7 +225,10 @@ const year = new Date().getFullYear();
           onScroll();
         } else {
           card.addEventListener('pointermove', (e) => aim(e.clientX, e.clientY));
-          card.addEventListener('pointerleave', () => groups.forEach((g) => (g.style.transform = '')));
+          card.addEventListener('pointerleave', () => {
+            groups.forEach((_, i) => (tgt[i] = nearest(i, 0)));
+            kick();
+          });
         }
       }
 
@@ -169,7 +237,7 @@ const year = new Date().getFullYear();
       // fluxo manda; o cursor dobra o fluxo e o clique manda uma onda.
       // ------------------------------------------------------------
       const canvas = document.getElementById('field') as HTMLCanvasElement | null;
-      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const reduced = reducedMq.matches;
 
       if (canvas) {
         const ctx = canvas.getContext('2d')!;
@@ -241,13 +309,18 @@ const year = new Date().getFullYear();
           Math.sin((x + y) * 0.35 + t * 0.25) * 0.6;
 
         let t0 = performance.now();
+        let last = t0;
         let visible = true;
         new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(canvas);
 
         const frame = (now: number) => {
           requestAnimationFrame(frame);
+          const dt = Math.min(0.05, Math.max(0, (now - last) / 1000));
+          last = now;
           if (!visible) return;
           const t = (now - t0) / 1000;
+          // Mesmo seguimento de antes (12% por quadro a 60 Hz), mas por tempo.
+          const follow = 1 - Math.exp(-dt / 0.13);
 
           if (coarse) {
             const dx = tilt ? tilt.x * W * 0.35 : 0;
@@ -255,14 +328,14 @@ const year = new Date().getFullYear();
             mouse.tx = W * (0.5 + 0.3 * Math.sin(t * 0.35)) + dx;
             mouse.ty = H * (0.42 + 0.22 * Math.cos(t * 0.27)) + dy;
           }
-          mouse.x += (mouse.tx - mouse.x) * 0.12;
-          mouse.y += (mouse.ty - mouse.y) * 0.12;
+          mouse.x += (mouse.tx - mouse.x) * follow;
+          mouse.y += (mouse.ty - mouse.y) * follow;
 
           ctx.clearRect(0, 0, W, H);
           ctx.lineCap = 'round';
 
           for (let i = waves.length - 1; i >= 0; i--) {
-            waves[i].t += 1 / 60;
+            waves[i].t += dt;
             if (waves[i].t > 2.2) waves.splice(i, 1);
           }
 
