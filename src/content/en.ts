@@ -1,7 +1,7 @@
 export default {
   lang: 'en',
   meta: {
-    title: 'Henrique Araújo · Custom-built websites',
+    title: 'Oblique · Custom-built websites',
     description:
       'Websites and software built from scratch for brands that want to grow. Made by a computer engineering student in Belo Horizonte, Brazil, for clients at home and abroad.',
   },
@@ -20,14 +20,14 @@ export default {
     lines: ['Your business', 'is not a template.', 'Your site should not be either.'],
     sub: 'I build websites from scratch, starting from what your business needs, not from what a ready-made theme allows.',
     cta: 'Talk on WhatsApp',
-    ctaText: 'Hi Henrique, I saw your site and I would like to talk about a project.',
+    ctaText: 'Hi! I saw the Oblique website and I would like to talk about a project.',
     status: 'Taking projects',
     hint: 'Move the mouse. Click.',
     location: 'Belo Horizonte, BR',
   },
   about: {
     title: 'Who I am',
-    p1: 'Henrique Araújo. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been into technology since before I knew it had a name.',
+    p1: 'I am Henrique Araújo, the person behind Oblique. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been into technology since before I knew it had a name.',
     p2: 'What I do differently is simple to say and rare to find: I listen. Before I open the editor, I want to understand what your business sells, to whom, and what needs to happen when someone lands on the page. The site comes out of that. Not out of a purchased theme.',
     p3: 'I work in English and Portuguese, with clients in Brazil and abroad.',
     facts: [
@@ -69,22 +69,22 @@ export default {
     link: 'Talk about this',
     items: [
       {
-        ctaText: 'Hi Henrique, I would like to talk about a landing page.',
+        ctaText: 'Hi! I would like to talk about a landing page.',
         title: 'Landing page',
         text: 'One page, one goal. To launch a product, collect leads, or sell a specific service.',
       },
       {
-        ctaText: 'Hi Henrique, I would like to talk about a business website.',
+        ctaText: 'Hi! I would like to talk about a business website.',
         title: 'Business website',
         text: 'Your brand home on the web. Who you are, what you do, how to reach you. Built to last.',
       },
       {
-        ctaText: 'Hi Henrique, I need something custom and would like to talk.',
+        ctaText: 'Hi! I need something custom and would like to talk.',
         title: 'Custom',
         text: 'Need something that does not fit a box? Client area, catalog, integrations. We talk, I build it.',
       },
       {
-        ctaText: 'Hi Henrique, I would like to know more about monthly maintenance.',
+        ctaText: 'Hi! I would like to know more about monthly maintenance.',
         title: 'Monthly maintenance',
         text: 'Updates, fixes, small tweaks and monitoring. Billed monthly. Want to stop? Stop. No lock-in.',
         tag: 'optional',
@@ -95,7 +95,7 @@ export default {
     title: 'Straight answers',
     note: 'Did not find yours?',
     noteCta: 'Ask on WhatsApp',
-    noteText: 'Hi Henrique, I have a question about how you work.',
+    noteText: 'Hi! I have a question about how you work.',
     items: [
       {
         q: 'Do I need text and photos ready?',
@@ -135,7 +135,7 @@ export default {
     title: 'Let us talk',
     text: 'Message me on WhatsApp with one sentence about what you need. I reply, we set up a conversation, and from there I put together the proposal.',
     cta: 'Open WhatsApp',
-    ctaText: 'Hi Henrique, I would like to talk about a website.',
+    ctaText: 'Hi! I saw the Oblique website and I would like to talk about a website.',
     emailLabel: 'or by email',
     socialLabel: 'also find me on',
   },

@@ -1,6 +1,6 @@
 // Dados de contato. Troque aqui e o site inteiro acompanha.
 export const site = {
-  name: 'Henrique Araújo',
+  name: 'Oblique',
   // Formato internacional, só dígitos. Ex.: 5531999999999
   whatsapp: '5531971274639',
   email: 'henriquepinharaujo@gmail.com',
