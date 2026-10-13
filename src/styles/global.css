@@ -320,6 +320,21 @@ p {
   }
 }
 
+/* Celular comum (360 a 440 px): marca, nome e os três botões somam ~410 px.
+   O nome sai, como já sai ao rolar, e o botão do WhatsApp cabe inteiro. */
+@media (max-width: 440px) {
+  .brand-name {
+    max-width: 0;
+    opacity: 0;
+  }
+  .header .wrap {
+    gap: 12px;
+  }
+  .tools {
+    gap: 8px;
+  }
+}
+
 /* ------------------------------------------------------------------
    Hero: campo interativo + manchete
    ------------------------------------------------------------------ */
