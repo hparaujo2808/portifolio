@@ -53,6 +53,8 @@ await page.evaluate(() => {
       border-left:3px solid var(--accent);border-radius:14px;padding:16px 18px;opacity:0}
     #promo-end{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;justify-content:center;
       padding:0 34px;gap:22px;background:var(--bg,#05080f);color:#fff;font-family:Geist,sans-serif;opacity:0}
+    #promo-end .brand{display:flex;align-items:center;gap:16px}
+    #promo-end .brand b{font:600 44px/1 Geist,sans-serif;letter-spacing:-.035em}
     #promo-end svg{width:64px;height:64px;color:#fff}
     #promo-end svg .acc{color:var(--accent)}
     #promo-end h2{font:600 40px/1.05 Geist,sans-serif;letter-spacing:-.035em;margin:0}
@@ -67,7 +69,7 @@ await page.evaluate(() => {
   const end = document.createElement('div');
   end.id = 'promo-end';
   const mark = document.querySelector('svg.mark')?.outerHTML || '';
-  end.innerHTML = `${mark}
+  end.innerHTML = `<div class="brand">${mark}<b>Oblique</b></div>
     <h2>Seu site<br>não é um <span>template.</span></h2>
     <div class="sub">Sites feitos do zero, sob medida.<br>Belo Horizonte, para o Brasil e o mundo.</div>
     <div class="url">henrique-araujo.netlify.app</div>
