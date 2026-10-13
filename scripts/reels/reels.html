@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet" />
+<style>
+  :root { --bg:#060a13; --fg:#eef2f7; --mut:#8b95a7; --acc:#2fd9c5; --ink:#03201c; }
+  * { margin:0; box-sizing:border-box; }
+  html, body { width:540px; height:960px; overflow:hidden; background:var(--bg); color:var(--fg);
+    font-family:Geist, sans-serif; -webkit-font-smoothing:antialiased; }
+  .sc { position:absolute; inset:0; display:none; overflow:hidden; }
+  canvas.full { position:absolute; inset:0; width:540px; height:960px; }
+  .big { font-weight:700; letter-spacing:-.045em; line-height:1.02; }
+  .w { display:inline-block; }
+  .l { overflow:hidden; display:block; padding-bottom:.06em; }
+  .l > span { display:inline-block; }
+  .acc { color:var(--acc); }
+  .center { text-align:center; }
+  .abs { position:absolute; left:0; right:0; }
+
+  #s1shade { position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 42% at 50% 44%, rgba(6,10,19,.94) 0, rgba(6,10,19,.7) 45%, rgba(6,10,19,0) 80%); }
+  #s1txt, #s2txt { position:absolute; left:34px; right:34px; top:300px; font-size:60px; }
+  #hlwrap { position:relative; display:inline-block; padding:0 .12em; margin-left:-.12em; }
+  #hl { position:absolute; inset:.06em 0 -.02em 0; background:var(--acc); border-radius:10px; transform-origin:left; }
+  #hlwrap .w { position:relative; }
+
+  #s3 .cap { font-size:34px; font-weight:600; letter-spacing:-.03em; }
+  .digit { position:absolute; left:0; right:0; top:300px; height:360px; display:flex; align-items:center;
+    justify-content:center; font-size:290px; font-weight:800; letter-spacing:-.06em; }
+  #ring { position:absolute; left:90px; top:300px; width:360px; height:360px; }
+  #s3out { position:absolute; left:0; right:0; top:440px; font-size:54px; }
+
+  #s4 { background:var(--bg); }
+  #band { position:absolute; left:50%; top:50%; height:2600px; background:var(--acc); }
+  #s4txt { position:absolute; left:0; right:0; top:370px; font-size:70px; color:var(--ink); }
+
+  #s56 { background:var(--bg); }
+  #s5shade { position:absolute; left:0; right:0; bottom:0; height:520px;
+    background:linear-gradient(to top, rgba(6,10,19,.96) 30%, rgba(6,10,19,0)); }
+  .g5 { position:absolute; left:34px; right:34px; top:520px; font-size:62px; }
+  #strike { position:absolute; left:-4px; top:52%; height:6px; background:var(--acc); border-radius:3px; }
+  .panel { position:absolute; inset:0; padding:0 38px; }
+  .panel .num { position:absolute; top:220px; left:38px; font:500 20px 'Geist Mono', monospace; color:var(--acc);
+    display:flex; align-items:center; gap:14px; }
+  .panel .num i { display:block; height:1.5px; width:70px; background:var(--acc); opacity:.6; }
+  .panel svg { position:absolute; top:280px; left:34px; width:150px; height:150px; }
+  .panel .t { position:absolute; top:470px; left:38px; right:30px; font-size:54px; }
+  .panel .d { position:absolute; top:612px; left:38px; right:40px; font-size:24px; line-height:1.35; color:var(--mut); }
+
+  #mark7 { position:absolute; left:150px; top:200px; width:240px; height:240px; overflow:visible; }
+  #mark7 g { transform-box:fill-box; transform-origin:center; }
+  #s7 .name { position:absolute; left:0; right:0; top:500px; font-size:48px; }
+  #s7 .role { position:absolute; left:0; right:0; top:566px; font-size:26px; color:var(--mut); font-weight:500; }
+  #s7 .from { position:absolute; left:0; right:0; top:608px; font-size:19px; color:var(--mut); }
+
+  #mark8 { position:absolute; left:247px; top:150px; width:46px; height:46px; }
+  #s8 .h { position:absolute; left:0; right:0; top:250px; font-size:58px; }
+  #btnwrap { position:absolute; left:0; right:0; top:540px; height:76px; display:flex; justify-content:center; }
+  #btn, .ring { position:absolute; width:320px; height:76px; border-radius:999px; }
+  #btn { background:var(--acc); color:var(--ink); font-size:25px; font-weight:650; letter-spacing:-.02em;
+    display:flex; align-items:center; justify-content:center; gap:12px; }
+  .ring { border:2px solid var(--acc); }
+  #url { position:absolute; left:0; right:0; top:652px; font:500 19px 'Geist Mono', monospace; color:var(--acc); }
+  #bio { position:absolute; left:0; right:0; top:684px; font-size:17px; color:var(--mut); }
+
+  #vig { position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 85% 70% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+  #grain { position:absolute; inset:0; width:540px; height:960px; opacity:.07; mix-blend-mode:overlay; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<!-- 1 e 2: gancho e problema, sobre uma parede de templates iguais -->
+<div class="sc" id="s12">
+  <canvas class="full" id="cvA" width="1080" height="1920"></canvas>
+  <div id="s1shade"></div>
+  <div id="s1txt" class="big">
+    <div><span class="w">Seu</span> <span class="w">site</span> <span class="w">parece</span></div>
+    <div><span class="w">com</span> <span class="w">o</span> <span class="w">de</span></div>
+    <div><span id="hlwrap"><i id="hl"></i><span class="w">todo</span> <span class="w">mundo?</span></span></div>
+  </div>
+  <div id="s2txt" class="big">
+    <div><span class="w">Template</span> <span class="w">é</span> <span class="w">rápido.</span></div>
+    <div style="margin-top:14px"><span class="w">E</span> <span class="w" id="esq"></span></div>
+  </div>
+</div>
+
+<!-- 3: os 3 segundos -->
+<div class="sc" id="s3">
+  <div class="abs center cap" id="cap31" style="top:210px"><span class="w">Em 3 segundos,</span></div>
+  <svg id="ring" viewBox="0 0 360 360">
+    <circle cx="180" cy="180" r="165" fill="none" stroke="#1d2535" stroke-width="6" />
+    <circle id="ringp" cx="180" cy="180" r="165" fill="none" stroke="#2fd9c5" stroke-width="6" stroke-linecap="round"
+      pathLength="1" stroke-dasharray="1" transform="rotate(-90 180 180)" />
+  </svg>
+  <div class="digit" id="d3">3</div><div class="digit" id="d2">2</div><div class="digit" id="d1">1</div>
+  <div class="abs center cap" id="cap32" style="top:700px"><span class="w">o cliente decide se fica</span></div>
+  <div id="s3out" class="big center"><span class="w">...ou vai embora.</span></div>
+</div>
+
+<!-- 4: a virada, o traço diagonal da marca -->
+<div class="sc" id="s4">
+  <svg class="full" viewBox="0 0 540 960" style="position:absolute;inset:0">
+    <path id="slash" d="M70 170 L470 790" stroke="#2fd9c5" stroke-width="30" stroke-linecap="round" fill="none"
+      pathLength="1" stroke-dasharray="1" />
+  </svg>
+  <div id="band"></div>
+  <div id="s4txt" class="big center">
+    <div><span class="w">E se fosse</span></div>
+    <div><span class="w">diferente?</span></div>
+  </div>
+</div>
+
+<!-- 5 e 6: campo de traços, promessa e as três garantias -->
+<div class="sc" id="s56">
+  <canvas class="full" id="cvB" width="1080" height="1920"></canvas>
+  <div id="s5shade"></div>
+  <div id="s5">
+    <div class="g5 big" id="g1"><span class="l"><span>Sites feitos</span></span><span class="l"><span class="acc">do zero.</span></span></div>
+    <div class="g5 big" id="g2"><span class="l"><span>Pensados pro</span></span><span class="l"><span>seu <span class="acc">negócio.</span></span></span></div>
+    <div class="g5 big" id="g3"><span class="l"><span>Não pro que um</span></span><span class="l"><span style="position:relative">tema permite.<i id="strike"></i></span></span></div>
+  </div>
+  <div class="panel" id="p1">
+    <div class="num">01 <i></i></div>
+    <svg viewBox="0 0 100 100" fill="none" stroke="#2fd9c5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path pathLength="1" d="M26 12h34l16 16v60H26z" /><path pathLength="1" d="M60 12v16h16" />
+      <path pathLength="1" d="M36 42h28M36 54h20" /><path pathLength="1" d="M36 72l9 9 19-19" />
+    </svg>
+    <div class="t big"><span class="w">Preço e prazo</span> <span class="w acc">fechados.</span></div>
+    <div class="d w">Escopo por escrito antes da primeira linha de código. Sem surpresa no meio.</div>
+  </div>
+  <div class="panel" id="p2">
+    <div class="num">02 <i></i></div>
+    <svg viewBox="0 0 100 100" fill="none" stroke="#2fd9c5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path pathLength="1" d="M8 50C22 26 36 18 50 18s28 8 42 32C78 74 64 82 50 82S22 74 8 50z" />
+      <path pathLength="1" d="M50 36a14 14 0 1 1 0 28a14 14 0 1 1 0-28z" /><path pathLength="1" d="M50 46v8" />
+    </svg>
+    <div class="t big"><span class="w">Você acompanha</span> <span class="w acc">tudo.</span></div>
+    <div class="d w">Cada versão chega pra você revisar. Ajuste faz parte do processo.</div>
+  </div>
+  <div class="panel" id="p3">
+    <div class="num">03 <i></i></div>
+    <svg viewBox="0 0 100 100" fill="none" stroke="#2fd9c5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path pathLength="1" d="M30 34a16 16 0 1 1 0 32a16 16 0 1 1 0-32z" /><path pathLength="1" d="M46 50h44" />
+      <path pathLength="1" d="M80 50v14M68 50v10" />
+    </svg>
+    <div class="t big"><span class="w">O site é</span> <span class="w acc">seu.</span></div>
+    <div class="d w">Código e domínio no seu nome. Sem fidelidade, sem amarra.</div>
+  </div>
+</div>
+
+<!-- 7: a marca se monta -->
+<div class="sc" id="s7">
+  <svg id="mark7" viewBox="0 0 32 32" fill="none" stroke="#eef2f7" stroke-width="2.4" stroke-linecap="round">
+    <g><path d="M4 8h6"/></g><g><path d="M13 8h6"/></g><g><path d="M22 8h6"/></g>
+    <g><path d="M4 16h6"/></g><g id="macc"><path d="M14 13l4 6"/></g><g><path d="M22 16h6"/></g>
+    <g><path d="M4 24h6"/></g><g><path d="M13 24h6"/></g><g><path d="M22 24h6"/></g>
+  </svg>
+  <div class="name big center"><span class="l"><span>Henrique Araújo</span></span></div>
+  <div class="role center"><span class="l"><span>Sites sob medida</span></span></div>
+  <div class="from center"><span class="l"><span>Belo Horizonte, pro Brasil e pro mundo</span></span></div>
+</div>
+
+<!-- 8: chamada -->
+<div class="sc" id="s8">
+  <svg id="mark8" viewBox="0 0 32 32" fill="none" stroke="#eef2f7" stroke-width="2.4" stroke-linecap="round">
+    <path d="M4 8h6M13 8h6M22 8h6M4 16h6M22 16h6M4 24h6M13 24h6M22 24h6"/><path d="M14 13l4 6" stroke="#2fd9c5"/>
+  </svg>
+  <div class="h big center">
+    <span class="l"><span>Bora tirar seu</span></span>
+    <span class="l"><span>site do</span></span>
+    <span class="l"><span class="acc">template?</span></span>
+  </div>
+  <div id="btnwrap"><div class="ring"></div><div class="ring"></div><div class="ring"></div>
+    <div id="btn">Chama no WhatsApp
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#03201c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+  <div id="url" class="center">henrique-araujo.netlify.app</div>
+  <div id="bio" class="center">link na bio</div>
+</div>
+
+<div id="vig"></div>
+<canvas id="grain" width="270" height="480"></canvas>
+
+<script>
+const W = 540, H = 960, DUR = 30;
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const eOut = (x) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
+const eIO = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const eIn = (x) => x * x * x;
+const eBack = (x) => 1 + 2.70158 * Math.pow(x - 1, 3) + 1.70158 * Math.pow(x - 1, 2);
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => [...document.querySelectorAll(s)];
+const show = (el, on) => (el.style.display = on ? 'block' : 'none');
+
+// "esquecível." letra por letra, pra se desfazer
+$('#esq').innerHTML = [...'esquecível.'].map((c) => `<span class="w">${c}</span>`).join('');
+
+function pop(el, t, a, dur = 0.45, dy = 34) {
+  const p = seg(t, a, a + dur), e = eOut(p), b = eBack(p);
+  el.style.opacity = e;
+  el.style.transform = `translateY(${(1 - b) * dy}px) scale(${0.86 + 0.14 * b})`;
+  el.style.filter = e < 1 ? `blur(${(1 - e) * 10}px)` : 'none';
+}
+function mask(el, t, a, out = null, dur = 0.6) {
+  let y = (1 - eOut(seg(t, a, a + dur))) * 115;
+  if (out != null) y -= eIO(seg(t, out, out + 0.4)) * 115;
+  el.style.transform = `translateY(${y}%)`;
+}
+function draw(paths, t, a, dur, gap = 0.12) {
+  paths.forEach((p, i) => {
+    const x = eIO(seg(t, a + i * gap, a + i * gap + dur));
+    p.style.strokeDasharray = 1;
+    p.style.strokeDashoffset = 1 - x;
+  });
+}
+
+// ---------- canvas: parede de templates ----------
+const A = $('#cvA').getContext('2d');
+function rr(c, x, y, w, h, r) { c.beginPath(); c.roundRect(x, y, w, h, r); }
+function card(c, x, y, w, h) {
+  rr(c, x, y, w, h, 12); c.fillStyle = '#0d1321'; c.fill(); c.strokeStyle = '#263044'; c.lineWidth = 1.2; c.stroke();
+  c.fillStyle = '#263044';
+  c.beginPath(); c.arc(x + 16, y + 16, 4, 0, 7); c.fill();
+  rr(c, x + 26, y + 13, 40, 6, 3); c.fill();
+  rr(c, x + w - 42, y + 13, 30, 6, 3); c.fill();
+  c.fillStyle = '#161e2e'; rr(c, x + 12, y + 32, w - 24, 66, 8); c.fill();
+  c.strokeStyle = '#263044'; c.beginPath(); c.moveTo(x + 22, y + 88); c.lineTo(x + 52, y + 60); c.lineTo(x + 72, y + 78);
+  c.lineTo(x + 90, y + 64); c.lineTo(x + w - 22, y + 88); c.stroke();
+  c.fillStyle = '#263044';
+  rr(c, x + 12, y + 110, w - 40, 8, 4); c.fill();
+  rr(c, x + 12, y + 126, w - 30, 6, 3); c.fill();
+  rr(c, x + 12, y + 138, w - 56, 6, 3); c.fill();
+  c.fillStyle = '#2b3549'; rr(c, x + 12, y + h - 34, 64, 20, 10); c.fill();
+}
+function drawCards(t) {
+  A.setTransform(2, 0, 0, 2, 0, 0);
+  A.fillStyle = '#060a13'; A.fillRect(0, 0, W, H);
+  const z = lerp(4.2, 1, eOut(seg(t, 0, 1.1)));
+  A.globalAlpha = lerp(1, 0.28, seg(t, 2.6, 4.6));
+  A.translate(W / 2, H / 2); A.scale(z, z); A.rotate(lerp(-0.08, 0, eOut(seg(t, 0, 1.1)))); A.translate(-W / 2, -H / 2);
+  const cw = 150, ch = 196, g = 18, x0 = (W - (3 * cw + 2 * g)) / 2;
+  const sc = (t * 70) % (ch + g);
+  for (let r = -2; r < 8; r++)
+    for (let c = 0; c < 3; c++) {
+      const off = c === 1 ? (ch + g) / 2 : 0;
+      card(A, x0 + c * (cw + g), r * (ch + g) - sc + off - 30, cw, ch);
+    }
+  A.globalAlpha = 1;
+}
+
+// ---------- canvas: campo de traços ----------
+const B = $('#cvB').getContext('2d');
+const SP = 30;
+function lerpAng(a, b, x) { let d = ((b - a + Math.PI) % (2 * Math.PI)) - Math.PI; if (d < -Math.PI) d += 2 * Math.PI; return a + d * x; }
+function drawField(t, dim, shift) {
+  B.setTransform(2, 0, 0, 2, 0, 0);
+  B.fillStyle = '#060a13'; B.fillRect(0, 0, W, H);
+  const cx0 = W / 2, cy0 = H * 0.36;
+  const P = { x: cx0 + Math.cos(t * 0.8) * 150, y: cy0 + Math.sin(t * 1.15) * 130 };
+  const R = (t - 10.45) * 800;
+  B.lineCap = 'round';
+  let accX = 0, accY = 0, accA = 0;
+  for (let gy = -1; gy < H / SP + 1; gy++)
+    for (let gx = -2; gx < W / SP + 3; gx++) {
+      const x = gx * SP + SP / 2 + shift, y = gy * SP + SP / 2;
+      const d = Math.hypot(x - cx0, y - cy0);
+      const k = eIO(cl((R - d) / 260));
+      const tgt = Math.atan2(P.y - y, P.x - x) + Math.sin(t * 0.7 + gx * 0.4 + gy * 0.3) * 0.25;
+      const ang = lerpAng(0, tgt, k);
+      const near = cl(1 - Math.hypot(P.x - x, P.y - y) / 260);
+      const len = 6 + 4 * near + 2 * k;
+      if (gx === 9 && gy === 11) { accX = x; accY = y; accA = ang + k * 0.9; continue; }
+      B.strokeStyle = `rgba(232,237,245,${(0.16 + 0.22 * k + 0.4 * near * k) * dim})`;
+      B.lineWidth = 1.6;
+      B.beginPath(); B.moveTo(x - Math.cos(ang) * len, y - Math.sin(ang) * len);
+      B.lineTo(x + Math.cos(ang) * len, y + Math.sin(ang) * len); B.stroke();
+    }
+  B.strokeStyle = `rgba(47,217,197,${0.35 + 0.65 * dim})`; B.lineWidth = 3;
+  B.shadowColor = '#2fd9c5'; B.shadowBlur = 14 * dim;
+  B.beginPath(); B.moveTo(accX - Math.cos(accA) * 13, accY - Math.sin(accA) * 13);
+  B.lineTo(accX + Math.cos(accA) * 13, accY + Math.sin(accA) * 13); B.stroke();
+  B.shadowBlur = 0;
+}
+
+// ---------- granulação ----------
+const G = $('#grain').getContext('2d');
+const gimg = G.createImageData(270, 480);
+function grain(f) {
+  let s = (f * 2654435761) >>> 0;
+  const d = gimg.data;
+  for (let i = 0; i < d.length; i += 4) {
+    s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0;
+    const v = s & 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255;
+  }
+  G.putImageData(gimg, 0, 0);
+}
+
+const markOff = [...Array(9)].map((_, i) => ({
+  dx: Math.cos(i * 2.17 + 0.6) * 30, dy: Math.sin(i * 1.71 + 0.3) * 40, r: (i % 2 ? 1 : -1) * (120 + i * 25),
+}));
+
+window.render = function (t, f) {
+  // 1 e 2
+  const s12 = $('#s12'); show(s12, t < 5.45);
+  if (t < 5.45) {
+    drawCards(t);
+    const zt = seg(t, 5.05, 5.4);
+    s12.style.transform = `scale(${1 + 1.8 * eIn(zt)})`;
+    s12.style.filter = zt > 0 ? `blur(${14 * zt}px)` : 'none';
+    s12.style.opacity = 1 - seg(t, 5.2, 5.42);
+    const ws1 = $$('#s1txt .w');
+    [0.1, 0.22, 0.34, 0.62, 0.72, 0.8, 1.05, 1.18].forEach((a, i) => pop(ws1[i], t, a));
+    const hl = seg(t, 1.35, 1.65);
+    $('#hl').style.transform = `scaleX(${eIO(hl)})`;
+    $$('#hlwrap .w').forEach((w) => (w.style.color = hl > 0.5 ? '#03201c' : '#eef2f7'));
+    const ex = eIn(seg(t, 2.5, 2.8));
+    $('#s1txt').style.transform = `translateY(${-50 * ex}px)`;
+    $('#s1txt').style.opacity = 1 - ex;
+    const ws2 = $$('#s2txt > div > .w');
+    [2.75, 2.88, 3.0, 3.85].forEach((a, i) => pop(ws2[i], t, a));
+    pop($('#esq'), t, 3.97);
+    $$('#esq .w').forEach((c, i) => {
+      const p = eOut(seg(t, 4.45 + i * 0.05, 4.45 + i * 0.05 + 0.7));
+      c.style.opacity = 1 - 0.85 * p;
+      c.style.transform = `translateY(${-26 * p}px) rotate(${(i % 2 ? 1 : -1) * 10 * p}deg)`;
+      c.style.filter = p > 0 ? `blur(${5 * p}px)` : 'none';
+      c.style.color = p > 0 ? '#8b95a7' : '#eef2f7';
+    });
+  }
+
+  // 3
+  const s3 = $('#s3'); show(s3, t >= 5.25 && t < 8.7);
+  if (t >= 5.25 && t < 8.7) {
+    const en = eOut(seg(t, 5.25, 5.6));
+    s3.style.transform = `scale(${0.7 + 0.3 * en})`;
+    s3.style.filter = en < 1 ? `blur(${12 * (1 - en)}px)` : 'none';
+    s3.style.opacity = en;
+    pop($('#cap31 .w'), t, 5.4); pop($('#cap32 .w'), t, 5.85);
+    const fo = 1 - seg(t, 7.7, 7.95);
+    $('#cap31').style.opacity = $('#cap32').style.opacity = fo;
+    ['#d3', '#d2', '#d1'].forEach((id, i) => {
+      const s = 5.6 + 0.7 * i, el = $(id);
+      const a = eOut(seg(t, s, s + 0.25)), b = seg(t, s + 0.55, s + 0.7);
+      el.style.opacity = a * (1 - b);
+      el.style.transform = `scale(${lerp(1.4, 1, a) * lerp(1, 0.82, b)})`;
+      el.style.color = i === 2 ? '#2fd9c5' : '#eef2f7';
+    });
+    $('#ringp').style.strokeDashoffset = 1 - seg(t, 5.6, 7.7);
+    $('#ring').style.opacity = 1 - seg(t, 7.65, 7.9);
+    $('#ring').style.transform = `scale(${1 + 0.15 * seg(t, 7.65, 7.9)})`;
+    const o = $('#s3out .w');
+    pop(o, t, 7.8);
+    const wp = eIn(seg(t, 8.3, 8.62));
+    $('#s3out').style.transform = `translateX(${-640 * wp}px) skewX(${-14 * wp}deg)`;
+    $('#s3out').style.filter = wp > 0 ? `blur(${12 * wp}px)` : 'none';
+  }
+
+  // 4
+  const s4 = $('#s4'); show(s4, t >= 8.55 && t < 10.9);
+  if (t >= 8.55 && t < 10.9) {
+    $('#slash').style.strokeDashoffset = 1 - eIO(seg(t, 8.6, 8.95));
+    const bw = eIO(seg(t, 8.95, 9.35));
+    const band = $('#band');
+    band.style.width = `${30 + 1500 * bw}px`;
+    band.style.opacity = bw > 0 ? 1 : 0;
+    band.style.transform = `translate(-50%,-50%) rotate(${-32.8}deg)`;
+    $$('#s4txt .w').forEach((w, i) => pop(w, t, 9.3 + i * 0.16, 0.5, 40));
+  }
+
+  // 5 e 6
+  const s56 = $('#s56'); show(s56, t >= 10.25 && t < 22.4);
+  if (t >= 10.25 && t < 22.4) {
+    const r = eIO(seg(t, 10.25, 10.85));
+    s56.style.clipPath = r < 1 ? `circle(${1100 * r}px at 50% 46%)` : 'none';
+    const out = eIn(seg(t, 22.05, 22.38));
+    s56.style.transform = `scale(${1 - 0.12 * out})`;
+    s56.style.opacity = 1 - out;
+    s56.style.filter = out > 0 ? `blur(${10 * out}px)` : 'none';
+    const wins = [[15.45, 15.8], [17.75, 18.1], [19.95, 20.3]];
+    let k = 0, bl = 0;
+    for (const [a, b] of wins) { const p = seg(t, a, b); k += eIO(p); bl += Math.sin(Math.PI * p) * 16; }
+    drawField(t, lerp(1, 0.32, seg(t, 15.45, 15.8)), -k * 40);
+    $('#s5shade').style.opacity = 1 - seg(t, 15.45, 15.8);
+    const s5 = $('#s5');
+    s5.style.transform = `translateX(${-k * 540}px)`;
+    s5.style.filter = bl > 0.2 && k < 1.2 ? `blur(${bl}px)` : 'none';
+    const g = [['#g1', 10.85, 12.65], ['#g2', 12.9, 14.15], ['#g3', 14.35, null]];
+    for (const [id, a, o] of g) $$(`${id} .l > span`).forEach((sp, i) => mask(sp, t, a + i * 0.16, o == null ? null : o + i * 0.06));
+    $('#strike').style.width = `${104 * eIO(seg(t, 14.95, 15.25))}%`;
+    ['#p1', '#p2', '#p3'].forEach((id, i) => {
+      const p = $(id), s = [15.6, 17.95, 20.15][i];
+      const x = (i + 1 - k) * 540;
+      show(p, Math.abs(x) < 600);
+      p.style.transform = `translateX(${x}px)`;
+      p.style.filter = bl > 0.2 ? `blur(${bl}px)` : 'none';
+      draw([...p.querySelectorAll('svg path')], t, s + 0.15, 0.6, 0.14);
+      pop(p.querySelector('.num'), t, s + 0.05);
+      p.querySelectorAll('.t .w').forEach((w, j) => pop(w, t, s + 0.25 + j * 0.14));
+      pop(p.querySelector('.d'), t, s + 0.6, 0.5, 18);
+    });
+  }
+
+  // 7
+  const s7 = $('#s7'); show(s7, t >= 22.05 && t < 25.8);
+  if (t >= 22.05 && t < 25.8) {
+    const en = eOut(seg(t, 22.05, 22.45)), ex = eIn(seg(t, 25.45, 25.78));
+    s7.style.opacity = en * (1 - ex);
+    s7.style.transform = `scale(${lerp(1.15, 1, en) * lerp(1, 0.92, ex)})`;
+    $$('#mark7 g').forEach((gEl, i) => {
+      const a = 22.3 + (i === 4 ? 0.55 : i * 0.05);
+      const p = eOut(seg(t, a, a + 0.8)), m = markOff[i];
+      gEl.style.transform = `translate(${m.dx * (1 - p)}px,${m.dy * (1 - p)}px) rotate(${m.r * (1 - p)}deg) scale(${lerp(0.4, 1, p)})`;
+      gEl.style.opacity = cl(p * 1.6);
+    });
+    const ac = seg(t, 22.95, 23.2), glow = Math.sin(Math.PI * seg(t, 22.95, 23.8));
+    $('#macc').style.stroke = ac > 0.5 ? '#2fd9c5' : '#eef2f7';
+    $('#mark7').style.filter = glow > 0 ? `drop-shadow(0 0 ${18 * glow}px rgba(47,217,197,${0.9 * glow}))` : 'none';
+    $('#mark7').style.transform = `scale(${1 + 0.06 * glow})`;
+    mask($('#s7 .name .l > span'), t, 23.35);
+    mask($('#s7 .role .l > span'), t, 23.55);
+    mask($('#s7 .from .l > span'), t, 23.75);
+  }
+
+  // 8
+  const s8 = $('#s8'); show(s8, t >= 25.5);
+  if (t >= 25.5) {
+    const en = eOut(seg(t, 25.5, 25.85));
+    s8.style.opacity = en;
+    s8.style.transform = `scale(${lerp(1.06, 1, en)})`;
+    pop($('#mark8'), t, 25.6);
+    $$('#s8 .h .l > span').forEach((sp, i) => mask(sp, t, 25.7 + i * 0.15));
+    const bp = seg(t, 26.4, 26.9);
+    const breathe = 1 + 0.025 * Math.sin((t - 26.9) * Math.PI * 2) * seg(t, 26.9, 27.2);
+    $('#btn').style.opacity = eOut(bp);
+    $('#btn').style.transform = `scale(${lerp(0.6, 1, eBack(bp)) * breathe})`;
+    $$('.ring').forEach((rg, i) => {
+      const ph = 26.9 + i * 0.33, p = ((t - ph) % 1 + 1) % 1;
+      const on = t >= ph;
+      rg.style.opacity = on ? 0.7 * (1 - p) : 0;
+      rg.style.transform = `scale(${1 + 0.32 * p}, ${1 + 0.7 * p})`;
+    });
+    pop($('#url'), t, 26.9, 0.45, 16);
+    pop($('#bio'), t, 27.1, 0.45, 16);
+  }
+
+  // vinheta escura suja o teal da virada
+  $('#vig').style.opacity = 1 - 0.85 * (seg(t, 8.95, 9.3) - seg(t, 10.3, 10.8));
+  grain(f);
+};
+</script>
+</body>
+</html>
