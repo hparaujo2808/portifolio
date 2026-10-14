@@ -717,7 +717,6 @@ p {
   aspect-ratio: 1;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center 22%;
   background: var(--bg-2);
 }
 
