@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import t from '../content/pt';
+---
+
+<Layout t={t} title={t.about.metaTitle} current="about" paths={{ pt: '/sobre/', en: '/en/about/' }}>
+  <About t={t} />
+  <Contact t={t} />
+</Layout>

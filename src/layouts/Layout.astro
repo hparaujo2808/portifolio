@@ -5,9 +5,15 @@ import Mark from '../components/Mark.astro';
 
 interface Props {
   t: any;
+  title?: string;
+  current?: 'about';
+  // Caminho desta página em cada idioma (troca de idioma e hreflang).
+  paths?: { pt: string; en: string };
 }
 
-const { t } = Astro.props;
+const { t, title = t.meta.title, current, paths = { pt: '/', en: '/en/' } } = Astro.props;
+const home = t.nav.home;
+const switchHref = t.lang === 'en' ? paths.pt : paths.en;
 const year = new Date().getFullYear();
 ---
 
@@ -16,13 +22,13 @@ const year = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{t.meta.title}</title>
+    <title>{title}</title>
     <meta name="description" content={t.meta.description} />
-    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:type" content="website" />
-    <link rel="alternate" hreflang="pt-BR" href={url("/")} />
-    <link rel="alternate" hreflang="en" href={url("/en/")} />
+    <link rel="alternate" hreflang="pt-BR" href={url(paths.pt)} />
+    <link rel="alternate" hreflang="en" href={url(paths.en)} />
     <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,18 +49,18 @@ const year = new Date().getFullYear();
   <body>
     <header class="header" id="header">
       <div class="wrap">
-        <a class="brand" href="#top" aria-label={site.name}>
+        <a class="brand" href={url(home + '#top')} aria-label={site.name}>
           <Mark size={28} />
           <span class="brand-name">{site.name}</span>
         </a>
         <nav class="nav" aria-label="Principal">
-          <a href="#about">{t.nav.about}</a>
-          <a href="#process">{t.nav.work}</a>
-          <a href="#services">{t.nav.services}</a>
-          <a href="#contact">{t.nav.contact}</a>
+          <a href={url(home + '#process')}>{t.nav.work}</a>
+          <a href={url(home + '#services')}>{t.nav.services}</a>
+          <a href={url(t.nav.aboutHref)} aria-current={current === 'about' ? 'page' : undefined}>{t.nav.about}</a>
+          <a href={current ? '#contact' : url(home + '#contact')}>{t.nav.contact}</a>
         </nav>
         <div class="tools">
-          <a class="chip" href={url(t.nav.switchLangHref)} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
+          <a class="chip" href={url(switchHref)} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
             {t.nav.switchLang}
           </a>
           <button class="theme-btn" id="theme" type="button" aria-label={t.nav.theme}>

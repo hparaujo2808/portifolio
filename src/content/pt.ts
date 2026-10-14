@@ -6,13 +6,14 @@ export default {
       'Sites e software sob medida para quem quer expandir a marca. Feito por um engenheiro de computação em formação, em Belo Horizonte, para clientes no Brasil e fora.',
   },
   nav: {
-    about: 'Quem sou',
+    home: '/',
+    about: 'Sobre',
+    aboutHref: '/sobre/',
     work: 'Como trabalho',
     services: 'O que entrego',
     contact: 'Contato',
     cta: 'WhatsApp',
     switchLang: 'EN',
-    switchLangHref: '/en/',
     theme: 'Alternar tema',
   },
   hero: {
@@ -25,7 +26,26 @@ export default {
     hint: 'Move o mouse. Clica.',
     location: 'Belo Horizonte, BR',
   },
+  studio: {
+    title: 'A Oblique',
+    slogan: 'Um ângulo só seu.',
+    lead: 'A Oblique faz sites e sistemas do zero para negócios que não cabem num modelo pronto.',
+    p2: 'O nome está na marca: oito traços em fila e um fora dela. Os oito são os sites que você já viu, todos com o mesmo tema, o mesmo banner e o mesmo botão de "saiba mais". O nono é o seu.',
+    p3: 'Cada projeto começa numa conversa sobre o que você vende e pra quem. Termina com o código e o domínio no seu nome, e você leva os dois pra onde quiser.',
+    facts: [
+      ['Base', 'Belo Horizonte, MG'],
+      ['Entrega', 'Do zero, sem template'],
+      ['Atende', 'Brasil e exterior'],
+      ['Seu', 'Código e domínio'],
+    ],
+  },
+  who: {
+    title: 'Quem faz',
+    text: 'Sou Henrique Araújo, estudante de Engenharia da Computação no IBMEC. Cada site da Oblique passa pela minha mão, da primeira mensagem até entrar no ar, e é comigo que você fala no WhatsApp.',
+    link: 'Mais sobre mim',
+  },
   about: {
+    metaTitle: 'Quem sou · Oblique',
     title: 'Quem sou',
     p1: 'Sou Henrique Araújo, quem está por trás da Oblique. Estudo Engenharia da Computação no IBMEC, em Belo Horizonte, e mexo com tecnologia desde antes de saber que isso tinha nome.',
     p2: 'O que eu faço diferente é simples de dizer e raro de encontrar: eu escuto. Antes de abrir o editor, eu quero entender o que o seu negócio vende, pra quem, e o que precisa acontecer quando alguém abre a página. O site sai disso. Não de um tema comprado.',

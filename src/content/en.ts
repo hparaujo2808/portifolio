@@ -6,13 +6,14 @@ export default {
       'Websites and software built from scratch for brands that want to grow. Made by a computer engineering student in Belo Horizonte, Brazil, for clients at home and abroad.',
   },
   nav: {
+    home: '/en/',
     about: 'About',
+    aboutHref: '/en/about/',
     work: 'How I work',
     services: 'What I build',
     contact: 'Contact',
     cta: 'WhatsApp',
     switchLang: 'PT',
-    switchLangHref: '/',
     theme: 'Toggle theme',
   },
   hero: {
@@ -25,7 +26,26 @@ export default {
     hint: 'Move the mouse. Click.',
     location: 'Belo Horizonte, BR',
   },
+  studio: {
+    title: 'Oblique',
+    slogan: 'An angle of your own.',
+    lead: 'Oblique builds websites and software from scratch, for businesses that do not fit a ready-made template.',
+    p2: 'The name is in the mark: eight strokes in line and one out of it. The eight are the sites you have already seen, all on the same theme, with the same banner and the same "learn more" button. The ninth is yours.',
+    p3: 'Every project starts with a conversation about what you sell and to whom. It ends with the code and the domain in your name, and you can take both wherever you want.',
+    facts: [
+      ['Based in', 'Belo Horizonte, Brazil'],
+      ['Built', 'From scratch, no templates'],
+      ['Clients', 'Brazil and abroad'],
+      ['Yours', 'Code and domain'],
+    ],
+  },
+  who: {
+    title: 'Who builds it',
+    text: 'I am Henrique Araújo, a Computer Engineering student at IBMEC. Every Oblique site goes through my hands, from the first message until it goes live, and I am the one you talk to on WhatsApp.',
+    link: 'More about me',
+  },
   about: {
+    metaTitle: 'Who I am · Oblique',
     title: 'Who I am',
     p1: 'I am Henrique Araújo, the person behind Oblique. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been into technology since before I knew it had a name.',
     p2: 'What I do differently is simple to say and rare to find: I listen. Before I open the editor, I want to understand what your business sells, to whom, and what needs to happen when someone lands on the page. The site comes out of that. Not out of a purchased theme.',

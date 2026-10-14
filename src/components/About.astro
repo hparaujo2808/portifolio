@@ -1,0 +1,35 @@
+---
+import { url } from '../config';
+import Mark from './Mark.astro';
+import Social from './Social.astro';
+
+interface Props {
+  t: any;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="section wrap page" id="about">
+  <h1>{t.about.title}</h1>
+  <div class="about-grid">
+    <figure class="portrait">
+      <span class="ph"><Mark size={96} class="faint" /><small>{t.about.photoPh}</small></span>
+      <img src={url("/henrique.jpg")} alt={t.about.photoAlt} onerror="this.remove()" />
+    </figure>
+    <div class="about-text">
+      <p class="lead">{t.about.p1}</p>
+      <p>{t.about.p2}</p>
+      <p>{t.about.p3}</p>
+      <div class="facts">
+        {t.about.facts.map(([k, v]: [string, string]) => (
+          <div>
+            <span>{k}</span>
+            <strong>{v}</strong>
+          </div>
+        ))}
+      </div>
+      <Social />
+    </div>
+  </div>
+</section>

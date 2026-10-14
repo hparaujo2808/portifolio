@@ -1,0 +1,30 @@
+---
+import { site, whatsappUrl } from '../config';
+import Mark from './Mark.astro';
+
+interface Props {
+  t: any;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="section wrap" id="contact">
+  <div class="contact" id="contact-card">
+    <Mark size={240} class="big" />
+    <h2>{t.contact.title}</h2>
+    <p class="lead">{t.contact.text}</p>
+    <div class="cta-row">
+      <a class="btn big" href={whatsappUrl(t.contact.ctaText)} target="_blank" rel="noopener">
+        {t.contact.cta}
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M7 17 17 7M9 7h8v8"></path>
+        </svg>
+      </a>
+      <span class="email">
+        <span>{t.contact.emailLabel}</span>
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </span>
+    </div>
+  </div>
+</section>

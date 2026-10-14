@@ -1,8 +1,8 @@
 ---
-import { site, whatsappUrl, url } from '../config';
+import { whatsappUrl, url } from '../config';
 import Mark from './Mark.astro';
 import ServiceIcon from './ServiceIcon.astro';
-import Social from './Social.astro';
+import Contact from './Contact.astro';
 
 interface Props {
   t: any;
@@ -33,26 +33,25 @@ const { t } = Astro.props;
   </div>
 </section>
 
-<section class="section wrap" id="about">
-  <h2>{t.about.title}</h2>
+<section class="section wrap" id="oblique">
+  <h2>{t.studio.title}</h2>
   <div class="about-grid">
-    <figure class="portrait">
-      <span class="ph"><Mark size={96} class="faint" /><small>{t.about.photoPh}</small></span>
-      <img src={url("/henrique.jpg")} alt={t.about.photoAlt} loading="lazy" onerror="this.remove()" />
+    <figure class="studio-card">
+      <Mark size={200} />
+      <figcaption>{t.studio.slogan}</figcaption>
     </figure>
     <div class="about-text">
-      <p class="lead">{t.about.p1}</p>
-      <p>{t.about.p2}</p>
-      <p>{t.about.p3}</p>
+      <p class="lead">{t.studio.lead}</p>
+      <p>{t.studio.p2}</p>
+      <p>{t.studio.p3}</p>
       <div class="facts">
-        {t.about.facts.map(([k, v]: [string, string]) => (
+        {t.studio.facts.map(([k, v]: [string, string]) => (
           <div>
             <span>{k}</span>
             <strong>{v}</strong>
           </div>
         ))}
       </div>
-      <Social />
     </div>
   </div>
 </section>
@@ -110,22 +109,15 @@ const { t } = Astro.props;
   </div>
 </section>
 
-<section class="section wrap" id="contact">
-  <div class="contact" id="contact-card">
-    <Mark size={240} class="big" />
-    <h2>{t.contact.title}</h2>
-    <p class="lead">{t.contact.text}</p>
-    <div class="cta-row">
-      <a class="btn big" href={whatsappUrl(t.contact.ctaText)} target="_blank" rel="noopener">
-        {t.contact.cta}
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path d="M7 17 17 7M9 7h8v8"></path>
-        </svg>
-      </a>
-      <span class="email">
-        <span>{t.contact.emailLabel}</span>
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-      </span>
+<section class="section wrap who-section" id="who">
+  <div class="who">
+    <img src={url("/henrique.jpg")} alt={t.about.photoAlt} loading="lazy" onerror="this.remove()" />
+    <div>
+      <h2>{t.who.title}</h2>
+      <p>{t.who.text}</p>
+      <a class="text-link" href={url(t.nav.aboutHref)}>{t.who.link}</a>
     </div>
   </div>
 </section>
+
+<Contact t={t} />

@@ -550,6 +550,7 @@ p {
   border-top: 1px solid var(--line);
 }
 
+.section h1,
 .section h2 {
   font-size: clamp(2rem, 4.2vw, 3.8rem);
   line-height: 1.02;
@@ -650,6 +651,94 @@ p {
   }
   .portrait {
     max-width: 420px;
+  }
+}
+
+/* Página interna: o hero não existe, então o título desce abaixo do header. */
+.section.page {
+  padding-top: clamp(130px, 14vw, 200px);
+}
+
+.nav a[aria-current='page'] {
+  color: var(--ink);
+}
+
+/* A Oblique: a marca ocupa o lugar que era da foto */
+.studio-card {
+  margin: 0;
+  aspect-ratio: 1;
+  border-radius: var(--radius);
+  background: var(--bg-2);
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.studio-card .mark {
+  width: clamp(120px, 15vw, 210px);
+  height: auto;
+}
+
+.studio-card figcaption {
+  position: absolute;
+  left: clamp(20px, 2.4vw, 32px);
+  bottom: clamp(18px, 2.2vw, 28px);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--ink-2);
+}
+
+@media (max-width: 800px) {
+  .studio-card {
+    aspect-ratio: 16 / 10;
+    max-width: 520px;
+  }
+  .studio-card .mark {
+    width: 110px;
+  }
+}
+
+/* Quem faz: o rosto fica na home, a história vai pra /sobre/ */
+.section.who-section {
+  padding-block: clamp(64px, 8vw, 110px);
+}
+
+.who {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 56px);
+}
+
+.who img {
+  flex: none;
+  width: clamp(104px, 12vw, 168px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 22%;
+  background: var(--bg-2);
+}
+
+.who h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  margin-bottom: 14px;
+}
+
+.who p {
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 52ch;
+  text-wrap: pretty;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 600px) {
+  .who {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -940,7 +1029,8 @@ p {
   margin-bottom: 6px;
 }
 
-.faq-link {
+.faq-link,
+.text-link {
   font-weight: 500;
   color: var(--accent);
   border-bottom: 1px solid currentColor;
