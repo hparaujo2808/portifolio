@@ -21,8 +21,8 @@ export default {
     lines: ['Your business', 'is not a template.', 'Your site should not be either.'],
     sub: 'I build websites from scratch, starting from what your business needs, not from what a ready-made theme allows.',
     cta: 'Talk on WhatsApp',
-    ctaText: 'Hi! I saw the Oblique website and I would like to talk about a project.',
-    status: 'Taking projects',
+    ctaText: 'Hello! I saw the Oblique website and I would like to talk about a project.',
+    status: 'Available for new projects',
     hint: 'Move the mouse. Click.',
     location: 'Belo Horizonte, BR',
   },
@@ -31,7 +31,7 @@ export default {
     slogan: 'An angle of your own.',
     lead: 'Oblique builds websites and software from scratch, for businesses that do not fit a ready-made template.',
     p2: 'The name is in the mark: eight strokes in line and one out of it. The eight are the sites you have already seen, all on the same theme, with the same banner and the same "learn more" button. The ninth is yours.',
-    p3: 'Every project starts with a conversation about what you sell and to whom. It ends with the code and the domain in your name, and you can take both wherever you want.',
+    p3: 'Every project starts with a conversation about what you sell and to whom. It ends with the code and the domain in your name, free for you to take wherever you want.',
     facts: [
       ['Based in', 'Belo Horizonte, Brazil'],
       ['Built', 'From scratch, no templates'],
@@ -41,14 +41,14 @@ export default {
   },
   who: {
     title: 'Who builds it',
-    text: 'I am Henrique Araújo, a Computer Engineering student at IBMEC. Every Oblique site goes through my hands, from the first message until it goes live, and I am the one you talk to on WhatsApp.',
+    text: 'I am Henrique Araújo, founder of Oblique and a Computer Engineering student at IBMEC. I personally oversee every project, from the first message to launch, and I am the one who answers you on WhatsApp.',
     link: 'More about me',
   },
   about: {
     metaTitle: 'Who I am · Oblique',
     title: 'Who I am',
-    p1: 'I am Henrique Araújo, the person behind Oblique. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been into technology since before I knew it had a name.',
-    p2: 'What I do differently is simple to say and rare to find: I listen. Before I open the editor, I want to understand what your business sells, to whom, and what needs to happen when someone lands on the page. The site comes out of that. Not out of a purchased theme.',
+    p1: 'I am Henrique Araújo, founder of Oblique. I study Computer Engineering at IBMEC in Belo Horizonte, Brazil, and I have been passionate about technology from an early age.',
+    p2: 'What sets me apart is simple to say and rare to find: I listen. Before writing a single line of code, I want to understand what your business sells, to whom, and what needs to happen when someone lands on the page. The project grows out of that conversation, not out of a ready-made theme.',
     p3: 'I work in English and Portuguese, with clients in Brazil and abroad.',
     facts: [
       ['Based in', 'Belo Horizonte, Brazil'],
@@ -65,61 +65,61 @@ export default {
       {
         label: 'Step 1',
         title: 'Conversation',
-        text: 'A call or a message thread. I ask a lot: what you sell, who buys it, what the site needs to make happen.',
+        text: 'A call or a message thread to understand the business: what you sell, who buys it and what results the site needs to deliver.',
       },
       {
         label: 'Step 2',
         title: 'Proposal',
-        text: 'Written scope, timeline and price, locked before a single line of code. No surprises halfway through.',
+        text: 'A written scope with timeline and price agreed before a single line of code. No surprises halfway through.',
       },
       {
         label: 'Step 3',
         title: 'Build',
-        text: 'You watch the site take shape, with versions to review. Adjusting is part of the process, not an exception.',
+        text: 'You follow the development and receive versions to review. Revisions are part of the process.',
       },
       {
         label: 'Step 4',
-        title: 'Launch, and care',
-        text: 'Deployment, domain, and an optional monthly maintenance plan. Cancel whenever you want, no penalty.',
+        title: 'Launch and support',
+        text: 'Launch, domain setup and an optional monthly maintenance plan, which you can cancel at any time with no penalty.',
       },
     ],
   },
   services: {
     title: 'What I build',
-    link: 'Talk about this',
+    link: 'Request a quote',
     items: [
       {
-        ctaText: 'Hi! I would like to talk about a landing page.',
+        ctaText: 'Hello! I would like to talk about a landing page.',
         title: 'Landing page',
         text: 'One page, one goal. To launch a product, collect leads, or sell a specific service.',
       },
       {
-        ctaText: 'Hi! I would like to talk about a business website.',
+        ctaText: 'Hello! I would like to talk about a business website.',
         title: 'Business website',
         text: 'Your brand home on the web. Who you are, what you do, how to reach you. Built to last.',
       },
       {
-        ctaText: 'Hi! I need something custom and would like to talk.',
+        ctaText: 'Hello! I need something custom and would like to talk.',
         title: 'Custom',
-        text: 'Need something that does not fit a box? Client area, catalog, integrations. We talk, I build it.',
+        text: 'For projects that do not fit a ready-made model: client areas, catalogs, integrations with other systems. We define the scope together and I build it.',
       },
       {
-        ctaText: 'Hi! I would like to know more about monthly maintenance.',
+        ctaText: 'Hello! I would like to know more about monthly maintenance.',
         title: 'Monthly maintenance',
-        text: 'Updates, fixes, small tweaks and monitoring. Billed monthly. Want to stop? Stop. No lock-in.',
+        text: 'Updates, fixes, small adjustments and monitoring. Billed monthly, with no long-term contract.',
         tag: 'optional',
       },
     ],
   },
   faq: {
-    title: 'Straight answers',
-    note: 'Did not find yours?',
+    title: 'Frequently asked questions',
+    note: 'Did not find your question?',
     noteCta: 'Ask on WhatsApp',
-    noteText: 'Hi! I have a question about how you work.',
+    noteText: 'Hello! I have a question about how you work.',
     items: [
       {
         q: 'Do I need text and photos ready?',
-        a: 'No. Most people do not. I outline the copy with you in the first conversation and point out where a real photo matters and where it does not.',
+        a: 'No. Most clients do not. I outline the copy with you in our first conversation and point out where a real photo makes a difference.',
       },
       {
         q: 'How much does it cost?',
@@ -131,7 +131,7 @@ export default {
       },
       {
         q: 'What if I want to stop the maintenance?',
-        a: 'Then it stops. The site stays yours, online, working. Maintenance is a service, not a leash.',
+        a: 'Just let me know. The site stays yours, online and working. Maintenance is a service, not an obligation.',
       },
       {
         q: 'Do I own the site?',
@@ -139,7 +139,7 @@ export default {
       },
       {
         q: 'I already have a site. Can you redo it?',
-        a: 'Yes, and it is the most common case. We look at what exists, keep what works and rebuild what no longer convinces.',
+        a: 'Yes, and it is one of the most common cases. We review what already exists, keep what works and rebuild what no longer serves you.',
       },
       {
         q: 'How does payment work?',
@@ -152,10 +152,10 @@ export default {
     ],
   },
   contact: {
-    title: 'Let us talk',
-    text: 'Message me on WhatsApp with one sentence about what you need. I reply, we set up a conversation, and from there I put together the proposal.',
+    title: "Let's talk",
+    text: 'Send me a message on WhatsApp describing what you need. I will reply, we will schedule a conversation, and from there I will prepare your proposal.',
     cta: 'Open WhatsApp',
-    ctaText: 'Hi! I saw the Oblique website and I would like to talk about a website.',
+    ctaText: 'Hello! I saw the Oblique website and I would like to talk about a website.',
     emailLabel: 'or by email',
     socialLabel: 'also find me on',
   },
