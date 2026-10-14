@@ -224,15 +224,29 @@ const year = new Date().getFullYear();
           kick();
         };
         if (coarse) {
-          // Sem cursor: os traços miram um ponto que desce com a rolagem.
-          const onScroll = () => {
-            const r = card.getBoundingClientRect();
-            if (r.bottom < 0 || r.top > innerHeight) return;
-            const k = (innerHeight - r.top) / (innerHeight + r.height);
-            aim(innerWidth * (0.15 + 0.7 * k), r.top + r.height * (1.2 - k * 1.4));
-          };
-          addEventListener('scroll', onScroll, { passive: true });
-          onScroll();
+          // Sem cursor: os traços chegam espalhados, como o campo do hero, e
+          // se encaixam um a um quando o cartão aparece. Termina sempre na marca.
+          if (!reducedMq.matches) {
+            const scatter = [70, -55, 115, -80, 150, 40, -120, 95, -35];
+            groups.forEach((g, i) => {
+              cur[i] = tgt[i] = scatter[i % scatter.length];
+              g.style.transform = `rotate(${cur[i]}deg)`;
+            });
+            const io = new IntersectionObserver(
+              ([e]) => {
+                if (!e.isIntersecting) return;
+                io.disconnect();
+                groups.forEach((_, i) =>
+                  setTimeout(() => {
+                    tgt[i] = 0;
+                    kick();
+                  }, 120 + i * 70),
+                );
+              },
+              { threshold: 0.45 },
+            );
+            io.observe(card);
+          }
         } else {
           card.addEventListener('pointermove', (e) => aim(e.clientX, e.clientY));
           card.addEventListener('pointerleave', () => {
