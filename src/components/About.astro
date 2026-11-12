@@ -15,7 +15,7 @@ const { t } = Astro.props;
   <div class="about-grid">
     <figure class="portrait">
       <span class="ph"><Mark size={96} class="faint" /><small>{t.about.photoPh}</small></span>
-      <img src={url("/henrique.jpg")} alt={t.about.photoAlt} onerror="this.remove()" />
+      <img src={url("/henrique.jpg")} alt={t.about.photoAlt} width="908" height="1135" decoding="async" onerror="this.remove()" />
     </figure>
     <div class="about-text">
       <p class="lead">{t.about.p1}</p>

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { site, whatsappUrl, url } from '../config';
 import Mark from '../components/Mark.astro';
+import geistLatin from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 
 interface Props {
   t: any;
@@ -9,12 +10,35 @@ interface Props {
   current?: 'about';
   // Caminho desta página em cada idioma (troca de idioma e hreflang).
   paths?: { pt: string; en: string };
+  // Páginas que o buscador não deve indexar (404).
+  noindex?: boolean;
 }
 
-const { t, title = t.meta.title, current, paths = { pt: '/', en: '/en/' } } = Astro.props;
+const { t, title = t.meta.title, current, paths = { pt: '/', en: '/en/' }, noindex = false } = Astro.props;
 const home = t.nav.home;
 const switchHref = t.lang === 'en' ? paths.pt : paths.en;
 const year = new Date().getFullYear();
+
+// Endereços completos: canonical, hreflang e prévia de link exigem URL absoluta.
+const abs = (p: string) => new URL(url(p), Astro.site).href;
+const here = abs(t.lang === 'en' ? paths.en : paths.pt);
+const ogImage = abs('/og.png');
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  url: abs('/'),
+  image: ogImage,
+  logo: abs('/icon-512.png'),
+  description: t.meta.description,
+  slogan: t.studio.slogan,
+  email: site.email,
+  telephone: '+' + site.whatsapp,
+  areaServed: ['BR', 'Worldwide'],
+  address: { '@type': 'PostalAddress', addressLocality: site.city, addressRegion: 'MG', addressCountry: 'BR' },
+  founder: { '@type': 'Person', name: 'Henrique Araújo' },
+  sameAs: [site.linkedin, site.github],
+};
 ---
 
 <!doctype html>
@@ -24,19 +48,33 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={t.meta.description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:type" content="website" />
-    <link rel="alternate" hreflang="pt-BR" href={url(paths.pt)} />
-    <link rel="alternate" hreflang="en" href={url(paths.en)} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:url" content={here} />
+    <meta property="og:locale" content={t.lang === 'en' ? 'en_US' : 'pt_BR'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t.meta.title} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="canonical" href={here} />
+    <link rel="alternate" hreflang="pt-BR" href={abs(paths.pt)} />
+    <link rel="alternate" hreflang="en" href={abs(paths.en)} />
+    <link rel="alternate" hreflang="x-default" href={abs(paths.pt)} />
+    <link rel="sitemap" href={abs('/sitemap-index.xml')} />
+    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)" />
     <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={url("/apple-touch-icon.png")} />
     <link rel="manifest" href={url("/manifest.webmanifest")} />
     <meta name="apple-mobile-web-app-title" content={site.name} />
     <meta name="application-name" content={site.name} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <script is:inline>
       // Tema antes do primeiro paint, pra não piscar.
       (function () {
@@ -58,6 +96,7 @@ const year = new Date().getFullYear();
           <span class="brand-name">{site.name}</span>
         </a>
         <nav class="nav" aria-label="Principal">
+          <a href={url(home + '#work')}>{t.nav.cases}</a>
           <a href={url(home + '#process')}>{t.nav.work}</a>
           <a href={url(home + '#services')}>{t.nav.services}</a>
           <a href={url(t.nav.aboutHref)} aria-current={current === 'about' ? 'page' : undefined}>{t.nav.about}</a>
@@ -344,6 +383,7 @@ const year = new Date().getFullYear();
           Math.sin(x * 0.9 + t * 0.6) * Math.cos(y * 0.7 - t * 0.4) +
           Math.sin((x + y) * 0.35 + t * 0.25) * 0.6;
 
+        const hot: number[] = [];
         let t0 = performance.now();
         let last = t0;
         let visible = true;
@@ -369,6 +409,12 @@ const year = new Date().getFullYear();
 
           ctx.clearRect(0, 0, W, H);
           ctx.lineCap = 'round';
+
+          // Os traços em repouso têm todos o mesmo estilo: vão num traçado só,
+          // com um stroke() por quadro. Só os que reagem ao cursor ou a uma onda
+          // (poucos) são desenhados um a um.
+          const base = `rgba(${c.field},1)`;
+          ctx.beginPath();
 
           for (let i = waves.length - 1; i >= 0; i--) {
             waves[i].t += dt;
@@ -411,15 +457,30 @@ const year = new Date().getFullYear();
               const cx = Math.cos(a) * len * 0.5;
               const cy = Math.sin(a) * len * 0.5;
 
-              ctx.strokeStyle = mix > 0.05 ? c.accent : `rgba(${c.field},1)`;
-              ctx.globalAlpha = Math.min(alpha, 0.95);
-              ctx.lineWidth = 1 + mix * 0.8;
-              ctx.beginPath();
-              ctx.moveTo(x - cx, y - cy);
-              ctx.lineTo(x + cx, y + cy);
-              ctx.stroke();
+              if (alpha === 0.16) {
+                ctx.moveTo(x - cx, y - cy);
+                ctx.lineTo(x + cx, y + cy);
+              } else {
+                hot.push(x - cx, y - cy, x + cx, y + cy, alpha, mix);
+              }
             }
           }
+          ctx.strokeStyle = base;
+          ctx.globalAlpha = 0.16;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          for (let k = 0; k < hot.length; k += 6) {
+            const m = hot[k + 5];
+            ctx.strokeStyle = m > 0.05 ? c.accent : base;
+            ctx.globalAlpha = Math.min(hot[k + 4], 0.95);
+            ctx.lineWidth = 1 + m * 0.8;
+            ctx.beginPath();
+            ctx.moveTo(hot[k], hot[k + 1]);
+            ctx.lineTo(hot[k + 2], hot[k + 3]);
+            ctx.stroke();
+          }
+          hot.length = 0;
           ctx.globalAlpha = 1;
         };
 

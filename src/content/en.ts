@@ -9,6 +9,7 @@ export default {
     home: '/en/',
     about: 'About',
     aboutHref: '/en/about/',
+    cases: 'Work',
     work: 'How I work',
     services: 'What I build',
     contact: 'Contact',
@@ -37,6 +38,29 @@ export default {
       ['Built', 'From scratch, no templates'],
       ['Clients', 'Brazil and abroad'],
       ['Yours', 'Code and domain'],
+    ],
+  },
+  work: {
+    title: 'Work',
+    visit: 'Visit the site',
+    deliveredLabel: 'What was delivered',
+    items: [
+      {
+        name: 'Fiore d’Oro',
+        kind: 'Online store for women’s fashion',
+        meta: 'Belo Horizonte, Brazil · 2026',
+        href: 'https://fiore-d-oro.pages.dev',
+        domain: 'fiore-d-oro.pages.dev',
+        text: 'A women’s fashion store from Belo Horizonte, built from scratch. Customers pick their pieces, fill the bag and send the order over WhatsApp, where the store confirms sizing and arranges payment.',
+        delivered: [
+          'Catalog with categories, colors and sizes',
+          'Shopping bag with shipping by postal code and discount coupons',
+          'Customer accounts and order tracking',
+          'A dashboard where the owner adds products and follows orders on her own',
+        ],
+        alt: 'Fiore d’Oro store home page on desktop',
+        altMobile: 'Fiore d’Oro store home page on mobile',
+      },
     ],
   },
   who: {
