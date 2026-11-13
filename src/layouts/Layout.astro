@@ -118,9 +118,26 @@ const ld = {
           <a class="chip solid" href={whatsappUrl(t.hero.ctaText)} target="_blank" rel="noopener">
             {t.nav.cta}
           </a>
+          <button class="menu-btn" id="menu-btn" type="button" aria-label={t.nav.menu} aria-expanded="false" aria-controls="menu">
+            <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
         </div>
       </div>
     </header>
+
+    <!-- Menu do celular: abaixo de 800 px a navegação do topo some e mora aqui. -->
+    <div class="menu" id="menu">
+      <nav class="wrap" aria-label={t.nav.menu}>
+        <a href={url(home + '#work')}>{t.nav.cases}</a>
+        <a href={url(home + '#process')}>{t.nav.work}</a>
+        <a href={url(home + '#services')}>{t.nav.services}</a>
+        <a href={url(t.nav.aboutHref)} aria-current={current === 'about' ? 'page' : undefined}>{t.nav.about}</a>
+        <a href={current ? '#contact' : url(home + '#contact')}>{t.nav.contact}</a>
+        <a class="menu-lang" href={url(switchHref)} lang={t.nav.switchLang === 'EN' ? 'en' : 'pt-BR'}>
+          {t.nav.switchLangFull}
+        </a>
+      </nav>
+    </div>
 
     <main id="top">
       <slot />
@@ -178,16 +195,42 @@ const ld = {
       // Header some ao descer, volta ao subir
       const header = document.getElementById('header');
       let last = 0;
+      let menuOpen = false;
       addEventListener(
         'scroll',
         () => {
           const y = scrollY;
-          header?.classList.toggle('hide', y > last && y > 120);
+          // Com o menu aberto o cabeçalho fica: é nele que está o botão de fechar.
+          header?.classList.toggle('hide', !menuOpen && y > last && y > 120);
           header?.classList.toggle('compact', y > 80);
           last = y;
         },
         { passive: true },
       );
+
+      // Menu do celular. Fecha no link, no toque fora dos links e no Esc
+      // (o Esc devolve o foco ao botão). Aberto, o resto da página fica inerte.
+      const menuBtn = document.getElementById('menu-btn');
+      const menu = document.getElementById('menu');
+      const behind = [document.querySelector('main'), document.querySelector('footer')];
+      const setMenu = (open: boolean, refocus = false) => {
+        if (!menuBtn || !menu || open === menuOpen) return;
+        menuOpen = open;
+        menu.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', String(open));
+        document.documentElement.classList.toggle('menu-open', open);
+        behind.forEach((el) => el && ((el as HTMLElement).inert = open));
+        if (open) header?.classList.remove('hide');
+        else if (refocus) menuBtn.focus();
+      };
+      menuBtn?.addEventListener('click', () => setMenu(!menuOpen));
+      menu?.addEventListener('click', () => setMenu(false));
+      addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuOpen) setMenu(false, true);
+      });
+      matchMedia('(min-width: 801px)').addEventListener('change', (e) => {
+        if (e.matches) setMenu(false);
+      });
 
       // Linha do processo preenche conforme você rola
       const steps = document.getElementById('steps');

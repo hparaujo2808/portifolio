@@ -181,7 +181,8 @@ p {
 
 /* Vidro sobre vidro perde leitura: com o material ligado, os chips ficam sem fundo próprio. */
 .header.compact .chip:not(.solid),
-.header.compact .theme-btn {
+.header.compact .theme-btn,
+.header.compact .menu-btn {
   background: transparent;
   backdrop-filter: none;
 }
@@ -334,6 +335,117 @@ p {
   display: block;
 }
 
+/* Menu do celular: botão de três barras (a de baixo em teal, como o traço
+   oblíquo da marca) e painel em tela cheia. Só existem abaixo de 800 px. */
+.menu-btn {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  place-items: center;
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+  backdrop-filter: blur(10px);
+  transition: border-color 0.3s var(--ease), background-color 0.3s var(--ease), transform 0.1s ease-out;
+}
+
+.menu-btn .bars {
+  display: grid;
+  gap: 4px;
+  width: 18px;
+}
+
+.menu-btn .bars i {
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.4s var(--ease), opacity 0.2s var(--ease);
+}
+
+.menu-btn .bars i:last-child {
+  background: var(--accent);
+}
+
+.menu-btn[aria-expanded='true'] .bars i:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.menu-btn[aria-expanded='true'] .bars i:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn[aria-expanded='true'] .bars i:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 104px 0 40px;
+  background: var(--bg);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease), visibility 0s 0.3s;
+}
+
+.menu.open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s var(--ease);
+}
+
+.menu nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(1.6rem, 7.4vw, 2.2rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease-out);
+}
+
+.menu.open a {
+  opacity: 1;
+  transform: none;
+}
+
+.menu.open a:nth-child(2) { transition-delay: 0.04s; }
+.menu.open a:nth-child(3) { transition-delay: 0.08s; }
+.menu.open a:nth-child(4) { transition-delay: 0.12s; }
+.menu.open a:nth-child(5) { transition-delay: 0.16s; }
+.menu.open a:nth-child(6) { transition-delay: 0.2s; }
+
+.menu a[aria-current='page'] {
+  color: var(--accent);
+}
+
+.menu a.menu-lang {
+  margin-top: 20px;
+  border-bottom: 0;
+  min-height: 44px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+}
+
+/* Menu aberto: a página de trás não rola. */
+:root.menu-open {
+  overflow: hidden;
+}
+
 @media (max-width: 800px) {
   .nav {
     display: none;
@@ -357,6 +469,16 @@ p {
   }
   .header {
     padding-block: 14px;
+  }
+  /* A troca de idioma vai para dentro do menu: no topo ficam tema, WhatsApp e menu. */
+  .tools .chip:not(.solid) {
+    display: none;
+  }
+  .menu-btn {
+    display: grid;
+  }
+  .menu {
+    display: block;
   }
 }
 
@@ -559,6 +681,7 @@ p {
 .btn:active,
 .chip:active,
 .theme-btn:active,
+.menu-btn:active,
 .social-btn:active {
   transform: scale(0.97);
 }
@@ -1340,7 +1463,8 @@ p {
     mask-image: none;
   }
   .chip,
-  .theme-btn {
+  .theme-btn,
+  .menu-btn {
     background: var(--bg);
     backdrop-filter: none;
   }

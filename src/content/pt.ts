@@ -16,6 +16,8 @@ export default {
     cta: 'WhatsApp',
     switchLang: 'EN',
     theme: 'Alternar tema',
+    menu: 'Menu',
+    switchLangFull: 'English',
   },
   hero: {
     kicker: 'Sites e software sob medida',
