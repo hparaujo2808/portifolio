@@ -635,6 +635,20 @@ p {
   .hint {
     display: none;
   }
+  /* Véu: no celular os traços do campo passavam por cima do parágrafo e do
+     botão. Um degradê da cor do fundo atrás do bloco devolve a leitura; a
+     animação continua no resto do hero. */
+  .hero-foot {
+    position: relative;
+  }
+  .hero-foot::before {
+    content: '';
+    position: absolute;
+    inset: -40px calc(-1 * var(--gutter)) -56px;
+    z-index: -1;
+    background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--bg) 92%, transparent) 40px);
+    pointer-events: none;
+  }
 }
 
 /* ------------------------------------------------------------------
