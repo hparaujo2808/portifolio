@@ -341,6 +341,23 @@ p {
   .header .wrap {
     grid-template-columns: 1fr auto;
   }
+  /* Dedo, não cursor: todo botão do topo tem pelo menos 44 px. */
+  .chip {
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+  }
+  .theme-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .theme-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+  .header {
+    padding-block: 14px;
+  }
 }
 
 /* Celular comum (360 a 440 px): com os espaços menores, marca, nome e os três
