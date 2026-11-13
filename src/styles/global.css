@@ -617,7 +617,7 @@ p {
   top: 50%;
   z-index: 1;
   font-size: 0.85rem;
-  color: var(--ink-3);
+  color: var(--ink-2);
   writing-mode: vertical-rl;
   transform: translateY(-50%);
   opacity: 0;
@@ -770,7 +770,7 @@ p {
   place-items: center;
   align-content: center;
   gap: 12px;
-  color: var(--ink-3);
+  color: var(--ink-2);
   font-size: 0.85rem;
 }
 
