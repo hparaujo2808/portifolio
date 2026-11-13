@@ -33,29 +33,6 @@ const { t } = Astro.props;
   </div>
 </section>
 
-<section class="section wrap" id="oblique">
-  <h2>{t.studio.title}</h2>
-  <div class="about-grid">
-    <figure class="studio-card">
-      <Mark size={200} />
-      <figcaption>{t.studio.slogan}</figcaption>
-    </figure>
-    <div class="about-text">
-      <p class="lead">{t.studio.lead}</p>
-      <p>{t.studio.p2}</p>
-      <p>{t.studio.p3}</p>
-      <div class="facts">
-        {t.studio.facts.map(([k, v]: [string, string]) => (
-          <div>
-            <span>{k}</span>
-            <strong>{v}</strong>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section wrap" id="work">
   <h2>{t.work.title}</h2>
   {t.work.items.map((w: any) => (
@@ -96,6 +73,29 @@ const { t } = Astro.props;
       </div>
     </article>
   ))}
+</section>
+
+<section class="section wrap" id="oblique">
+  <h2>{t.studio.title}</h2>
+  <div class="about-grid">
+    <figure class="studio-card">
+      <Mark size={200} />
+      <figcaption>{t.studio.slogan}</figcaption>
+    </figure>
+    <div class="about-text">
+      <p class="lead">{t.studio.lead}</p>
+      <p>{t.studio.p2}</p>
+      <p>{t.studio.p3}</p>
+      <div class="facts">
+        {t.studio.facts.map(([k, v]: [string, string]) => (
+          <div>
+            <span>{k}</span>
+            <strong>{v}</strong>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="section wrap" id="process">
